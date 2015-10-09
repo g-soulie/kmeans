@@ -73,7 +73,7 @@ def genAleatoire(dimension):
 
 def read(filename):
 	population=[]
-	data = es.read_data(filename)
+	data = es.read_data(filename,ignore_first_column = True)
 	dimension=len(data[0])
 	for i in range(len(data)):
 		population.append(Ind(dimension))
@@ -81,15 +81,27 @@ def read(filename):
 	return population
 
 
+def write(filename,centroids):
+	data=[]
+	for i in range(len(centroids)):
+		data.append([])
+		data[i].append(centroids[i])
+	es.write_data(data,filename)
+
+
+
 if __name__ == '__main__':
-	n=400
+	#n=400
 	dimension=2
 	population = []
-	#population=lireImage("france-2.jpg",564,630,dimension)
-	population=read("iris.csv")
+	#population=genAleatoire(dimension)
+	population=lireImage("bretagne-2.jpg",413,500,dimension)
+	#population=read("iris.csv")
 	barycentres=[]#
-	k=3
+	k=15
 	B=[]
+
+	print(str(population[0].values))
 
 
 ##Phase 1 : initialisation
@@ -113,7 +125,7 @@ if __name__ == '__main__':
 	stop=False
 	while not stop:
 ##Phase 2 : reaffectation
-		afficher(population,barycentres,"computing k-means")
+		#afficher(population,barycentres,"computing k-means")
 		distance=[[]]
 		for i in range(len(population)):
 			distance.append([])
@@ -138,6 +150,9 @@ if __name__ == '__main__':
 			barycentres[j].updates()
 			print barycentres[j].values
 		#print barycentres
+	write("output.csv",centroids)
+
+
 	afficher(population,barycentres,"||||||||||||||||||||")
 
 

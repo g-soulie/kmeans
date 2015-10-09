@@ -16,8 +16,4 @@ class Bary:
 	def updates(self):
 		for i in range(self.dimension):
 			for j in range(len(self.pop)):
-				self.values[i]+=self.pop[j].values[i]/len(self.pop)
-	
-
-				
-
+				self.values[i]+=float(self.pop[j].values[i])/len(self.pop)

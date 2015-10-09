@@ -12,7 +12,6 @@ class Ind:
 		for i in range(length):
 			self.values.append(random.random())
 
-
 	def __eq__(self, ind):
 		if ind is None:
 			return False
@@ -28,7 +27,7 @@ class Ind:
 	def dist(self,ind):
 		somme=0
 		for i in range(self.length):
-			somme+=(self.values[i]-ind.values[i])**2
+			somme+=(float(self.values[i])-float(ind.values[i]))**2
 		return sqrt(somme)
 
 	def copy(self):
