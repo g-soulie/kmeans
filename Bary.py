@@ -12,6 +12,7 @@ class Bary:
 	def add(self,ind):
 		self.pop.append(ind)
 
+
 	def updates(self):
 		for i in range(self.dimension):
 			for j in range(len(self.pop)):
