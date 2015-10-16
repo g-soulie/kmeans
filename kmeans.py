@@ -4,7 +4,6 @@ from Ind import *
 from Bary import *
 import Image
 import matplotlib.pyplot as plt
-from es import *
 import es
 
 def index_min(tab):
@@ -95,10 +94,10 @@ if __name__ == '__main__':
 	dimension=2
 	population = []
 	#population=genAleatoire(dimension)
-	population=lireImage("bretagne-2.jpg",413,500,dimension)
+	population=lireImage("bretagne-3.jpg",413,500,dimension)
 	#population=read("iris.csv")
 	barycentres=[]#
-	k=15
+	k=20
 	B=[]
 
 	print(str(population[0].values))
@@ -125,7 +124,7 @@ if __name__ == '__main__':
 	stop=False
 	while not stop:
 ##Phase 2 : reaffectation
-		#afficher(population,barycentres,"computing k-means")
+		afficher(population,barycentres,"computing k-means")
 		distance=[[]]
 		for i in range(len(population)):
 			distance.append([])
@@ -148,8 +147,6 @@ if __name__ == '__main__':
 					barycentre.add(population[i])
 			barycentres[j]=barycentre
 			barycentres[j].updates()
-			print barycentres[j].values
-		#print barycentres
 	write("output.csv",centroids)
 
 
