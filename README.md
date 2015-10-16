@@ -1,13 +1,13 @@
 # kmeans
 exemple de commentaire :
-      """
-      	This function is used to determine the index the index of a list of floats
-      	@type	tab: list<float>
-      	@param	tab: tableau de float quelconque
-      	@rtype: int
-      	@return:	the index of the minimum of the list tab.
-      
-      	"""
+
+            This function is used to determine the index the index of a list of floats
+            @type	tab: list<float>
+            @param	tab: tableau de float quelconque
+            @rtype: int
+            @return:	the index of the minimum of the list tab.
+
+
 
 Ind.py : classe individu :
   un individu, c'est un objet ac une fonction distance et avec lequel on peut calculer des barycentres.
