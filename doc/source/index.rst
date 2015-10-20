@@ -6,16 +6,18 @@
 Welcome to K_means's documentation!
 ===================================
 
-Contents:
-
 .. toctree::
-   :maxdepth: 2
+   :caption: Table des matières
 
-.. automodule:: kmeans
+   introduction
+   kmeans
+   impl
+   nD
+   iris
+   sky
 
-.. autoclass:: Ind
-	:members:
 
+cookbook
 
 Indices and tables
 ==================

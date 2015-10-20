@@ -16,10 +16,11 @@ import commands
 def index_min(tab):
 	"""
 	This function is used to determine the index the index of a list of floats
-	@type	tab: list<float>
-	@param	tab: tableau de float quelconque
-	@rtype: int
-	@return:	the index of the minimum of the list tab.
+
+	:arg tab: tableau de float quelconque
+	:type tab: float[]
+	:returns:	the index of the minimum of the list tab.
+	:rtype: int
 
 	"""
 	min=tab[0]
