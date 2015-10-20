@@ -1,7 +1,15 @@
+"""
+Created on 29 July 2012
+@author: Lisa Simpson
+"""
+
 from math import *
 import random
 
 class Ind:
+	"""
+    Create and manage a new sqlite database.
+    """
 
 	def set_values(self, values):
 		self.values=values

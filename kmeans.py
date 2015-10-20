@@ -1,3 +1,8 @@
+"""
+Created on 29 July 2012
+@author: Lisa Simpson
+"""
+
 import random
 from math import *
 from Ind import *
