@@ -32,7 +32,7 @@
   
     <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
         <link rel="next" title="Les données Iris" href="iris.html"/>
-        <link rel="prev" title="Format des données" href="format.html"/> 
+        <link rel="prev" title="Traitement des données" href="data.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -85,7 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="format.html">Format des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Générations aléatoires de données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
@@ -135,6 +135,51 @@
             
   <div class="section" id="generations-aleatoires-de-donnees">
 <h1>Générations aléatoires de données<a class="headerlink" href="#generations-aleatoires-de-donnees" title="Permalink to this headline">¶</a></h1>
+<p>Le fichier <em>genData.py</em> permet de générer des gaussiennes en dimension n, grâce à la commande suivante :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type random
+</pre></div>
+</div>
+</div></blockquote>
+<p>La méthode utilisée est alors gen_random_data, qui créé les gaussiennes</p>
+<dl class="function">
+<dt id="genData.gen_random_data">
+<code class="descclassname">genData.</code><code class="descname">gen_random_data</code><span class="sig-paren">(</span><em>gaussiennes</em>, <em>dimension=2</em>, <em>taille_population=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/genData.html#gen_random_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#genData.gen_random_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Génére des gaussiennes de dimension dimension, et de forme définies par</dt>
+<dd>l&#8217;argument gaussienne.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gaussiennes</strong> (<em>dictionnaire</em>) &#8211; dictionnaire des gaussiennes à générées, de la forme :
+{&#8220;gaussienne1&#8221;:{&#8220;direction&#8221;:[],centre[]}}</li>
+<li><strong>dimension</strong> (<em>int</em>) &#8211; dimensions des observations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Plusieurs configurations de gaussiennes en 2 dimensions sont proposées en exemple.
+Il est possible de changer l&#8217;exemple générer en utilisant l&#8217;option -s :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type random -s 1
+</pre></div>
+</div>
+</div></blockquote>
+<p>Il est également possible d&#8217;afficher les deux premières coordonnées des données générées avec l&#8217;option -d :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type random -s 1 -d True
+</pre></div>
+</div>
+</div></blockquote>
 </div>
 
 
@@ -147,7 +192,7 @@
         <a href="iris.html" class="btn btn-neutral float-right" title="Les données Iris" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="format.html" class="btn btn-neutral" title="Format des données" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="data.html" class="btn btn-neutral" title="Traitement des données" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

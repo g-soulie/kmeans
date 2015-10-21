@@ -28,15 +28,13 @@ L'architecture générale du projet est la suivante :
 			|--input/
 			|    |--input.csv
 			|    |--bretagne.jpg
-			|    |--genInput.py
-			|    |--genAleatoire.py
-			|    |--genIris.py
-			|    |--genPicture.py
+			|    |--.iris.csv
 			|--output/
 			|    |--affectation.csv
 			|    |--centroids.csv
 			|--kmeans.py
 			|--es.py
+			|--genData.py
 			|--Observation.py
 
 
@@ -56,12 +54,10 @@ Table des matières
    introduction
    kmeans
    impl
-   format
+   data
    nD
    iris
    sky
-
-
 
 
 * :ref:`genindex`

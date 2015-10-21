@@ -84,7 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../format.html">Format des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nD.html">Générations aléatoires de données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sky.html">La Bretagne vue du ciel !</a></li>
@@ -137,27 +137,31 @@
 
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">Observation</span>
+<span class="kn">from</span> <span class="nn">Observation</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">commands</span>
 
-<div class="viewcode-block" id="read_data"><a class="viewcode-back" href="../impl.html#es.read_data">[docs]</a><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skip_first_line</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ignore_first_column</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="read_data"><a class="viewcode-back" href="../data.html#es.read_data">[docs]</a><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skip_first_line</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ignore_first_column</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Loads data from a csv file and returns the corresponding list.</span>
 <span class="sd">    All data are expected to be floats, except in the first column.</span>
 <span class="sd">    </span>
-<span class="sd">    @param filename: csv file name.</span>
+<span class="sd">    :param filename: csv file name.</span>
+<span class="sd">    :type filename: String</span>
 <span class="sd">    </span>
-<span class="sd">    @param skip_first_line: if True, the first line is not read.</span>
+<span class="sd">    :param skip_first_line: if True, the first line is not read.</span>
 <span class="sd">        Default value: False.</span>
+<span class="sd">    :type skip_first_line: boolean</span>
 <span class="sd">    </span>
-<span class="sd">    @param ignore_first_column: if True, the first column is ignored.</span>
+<span class="sd">    :param ignore_first_column: if True, the first column is ignored.</span>
 <span class="sd">        Default value: False.</span>
+<span class="sd">    :type ignore_first_column: boolean</span>
 <span class="sd">    </span>
-<span class="sd">    @return: a list of lists, each list being a row in the data file.</span>
+<span class="sd">    :return: a list of lists, each list being a row in the data file.</span>
 <span class="sd">        Rows are returned in the same order as in the file.</span>
 <span class="sd">        They contains floats, except for the 1st element which is a string</span>
 <span class="sd">        when the first column is not ignored.</span>
+<span class="sd">    :rtype: float[][]</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
@@ -174,14 +178,15 @@
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">data</span>
 </div>
-<div class="viewcode-block" id="write_data"><a class="viewcode-back" href="../impl.html#es.write_data">[docs]</a><span class="k">def</span> <span class="nf">write_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="write_data"><a class="viewcode-back" href="../data.html#es.write_data">[docs]</a><span class="k">def</span> <span class="nf">write_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Writes data in a csv file.</span>
 
-<span class="sd">    @param data: a list of lists</span>
-
-<span class="sd">    @param filename: the path of the file in which data is written.</span>
+<span class="sd">    :param data: a list of lists to write</span>
+<span class="sd">    :type data: float[][]</span>
+<span class="sd">    :param filename: the path of the file in which data is written.</span>
 <span class="sd">        The file is created if necessary; if it exists, it is overwritten.</span>
+<span class="sd">    :type filename: String</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c"># If you&#39;re curious, look at python&#39;s module csv instead, which offers</span>
     <span class="c"># more powerful means to write (and read!) csv files.</span>
@@ -190,24 +195,23 @@
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]))</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        
-</div>
-<div class="viewcode-block" id="read_kmeans_input"><a class="viewcode-back" href="../impl.html#es.read_kmeans_input">[docs]</a><span class="k">def</span> <span class="nf">read_kmeans_input</span><span class="p">():</span>
+        </div>
+<div class="viewcode-block" id="read_kmeans_input"><a class="viewcode-back" href="../data.html#es.read_kmeans_input">[docs]</a><span class="k">def</span> <span class="nf">read_kmeans_input</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This fonction reads the file &quot;input.csv&quot; within the input folder</span>
 
-<span class="sd">    :return population based on the input file</span>
+<span class="sd">    :return: population based on the input file</span>
 <span class="sd">    :rtype: Observation[]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">population</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="s">&#39;./input/input.csv&#39;</span><span class="p">,</span><span class="n">ignore_first_column</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span><span class="n">skip_first_line</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
-    <span class="n">dimension</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">dimension</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
         <span class="n">population</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Observation</span><span class="p">(</span><span class="n">dimension</span><span class="p">))</span>
         <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_values</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">population</span>
 </div>
-<div class="viewcode-block" id="write_kmeans_output"><a class="viewcode-back" href="../impl.html#es.write_kmeans_output">[docs]</a><span class="k">def</span> <span class="nf">write_kmeans_output</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span><span class="p">,</span><span class="n">affectation</span><span class="p">):</span>
+<div class="viewcode-block" id="write_kmeans_output"><a class="viewcode-back" href="../data.html#es.write_kmeans_output">[docs]</a><span class="k">def</span> <span class="nf">write_kmeans_output</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span><span class="p">,</span><span class="n">affectation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This fonction writes the files *affectation.csv* and *centroids.csv* in the output folder.</span>
 
@@ -219,6 +223,8 @@
 <span class="sd">    :arg    affectation: list of the observation&#39;s centroid label </span>
 <span class="sd">    :rtype: void</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dimension</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
     <span class="c">#Ecriture du fichier centroid.csv :</span>
     <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="s">&quot;# no_centre&quot;</span><span class="p">]]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
@@ -243,9 +249,37 @@
         <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">affectation</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     <span class="n">commands</span><span class="o">.</span><span class="n">getoutput</span><span class="p">(</span><span class="s">&quot;rm ./output/affectation.csv&quot;</span><span class="p">)</span>
     <span class="n">write_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&#39;./output/affectation.csv&#39;</span><span class="p">)</span>
-
 </div>
-<div class="viewcode-block" id="display"><a class="viewcode-back" href="../impl.html#es.display">[docs]</a><span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span><span class="p">,</span><span class="n">title</span><span class="p">):</span>
+<div class="viewcode-block" id="write_kmeans_input"><a class="viewcode-back" href="../data.html#es.write_kmeans_input">[docs]</a><span class="k">def</span> <span class="nf">write_kmeans_input</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">dimension</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function write the file *input.csv* in the input folder</span>
+
+<span class="sd">    :arg population: the set of observation we want to compute</span>
+<span class="sd">    :type population: float[][]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c">#get the dimension of the observations</span>
+    <span class="n">dimension</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="c">#create the table data to write</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="s">&quot;# no_observation&quot;</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;attribut_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+    <span class="c">#write the datas</span>
+    <span class="n">commands</span><span class="o">.</span><span class="n">getoutput</span><span class="p">(</span><span class="s">&quot;mkdir ./input/&quot;</span><span class="p">)</span>
+    <span class="n">commands</span><span class="o">.</span><span class="n">getoutput</span><span class="p">(</span><span class="s">&quot;rm ./input/input.csv&quot;</span><span class="p">)</span>
+    <span class="n">write_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s">&#39;./input/input.csv&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="display"><a class="viewcode-back" href="../data.html#es.display">[docs]</a><span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span><span class="p">,</span><span class="n">title</span><span class="p">,</span><span class="n">keep</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This fonction is used to display the population and the centroids on a graph</span>
 
@@ -255,29 +289,42 @@
 <span class="sd">    :arg    centroids: set of centroids</span>
 <span class="sd">    :type   titre: String</span>
 <span class="sd">    :arg    titre: name of the graphic</span>
+<span class="sd">    :arg    keep : if true, the figure stay open until the user close it</span>
+<span class="sd">    :type   keep : boolean</span>
 <span class="sd">    :rtype: void</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
     <span class="n">x</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">y</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">xcentroids</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">ycentroids</span><span class="o">=</span><span class="p">[]</span>
+    
+    
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
         <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
-        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">centroids</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">centroids</span><span class="p">)):</span>
-            <span class="n">xaffectation</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">centroids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">xcentroids</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">centroids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">centroids</span><span class="p">)):</span>
-            <span class="n">yaffectation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">centroids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">ycentroids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">centroids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xcentroids</span><span class="p">,</span><span class="n">ycentroids</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">&#39;red&#39;</span><span class="p">)</span>
+
+
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;ScatterPlot.png&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
-</pre></div>
+
+    <span class="k">if</span> <span class="n">keep</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div></div>
 
            </div>
           </div>

@@ -12,41 +12,67 @@ class Observation:
     Représente une observation
     """
 
-	def set_values(self, values):
-		self.values=values
+	def __init__(self,dimension):
+		"""
+		Create a new observation.
 
-	def __init__(self,length,type="data"):
-		self.values=[]
-		self.length=length
-		self.type = type
-		self.weight=0
-		for i in range(length):
-			self.values.append(random.random())
+		:arg dimension: dimension of the observation
+		:type dimension: int
+		"""
 
-	def __eq__(self, Observation):
-		if Observation is None:
-			return False
-		if not isinstance(Observation, Observation):
-			return False
-		if not self.length == Observation.length:
-			return False
-		for i in range(self.length):
-			if not self.values[i]==Observation.values[i]:
-				return False
-		return True
-
-	def dist(self,Observation):
-		somme=0
-		for i in range(self.length):
-			somme+=(float(self.values[i])-float(Observation.values[i]))**2
-		return sqrt(somme)
-
-	def copy(self):
-		i=Observation(self.length)
-		i.set_values(self.values)
-		return i
+		self.values = []
+		self.dimension = dimension
+		self.weight = 0.
+		for i in range(dimension):
+			self.values.append(0.)
 
 	def add(self,observation):
+		"""
+		Add another observation values to self.values, with ponderation by self.weight.
+		Typically use wen this instanciation of Observation is a centroid.
+		This function permits to compute easily a barycentre of several observations
+
+		:arg observation: the observation to add to the barycentre
+		:type observation: Observation
+		"""
 		for i in range(self.dimension):
-			self.values[i] = (self.weight*self.value[i]+observation.value[i])/(self.weight+1)
-			self.weight+=1
+			self.values[i] = (self.weight*self.values[i]+observation.values[i])/(self.weight+1.)
+		self.weight+=1.
+
+	def set_values(self, values):
+		"""
+		set the values of the observation
+
+		:arg values: valeurs de l'observation
+		:type values: float[]
+		:rtype: void
+		"""
+		for i in range(self.dimension):
+			self.values[i] = values[i]
+
+	def dist(self,observation):
+		"""
+		compute and return the euclidian distance between self \
+			and another observation
+
+		:arg observation: the observation to compute the distance with
+		:type observation: Observation
+		:rtype: float
+		"""
+		somme=0.
+		for i in range(self.dimension):
+			somme+=(self.values[i]-observation.values[i])**2
+		return sqrt(somme)
+
+
+	def copy(self):
+		"""
+		Return another obseration with the same values
+
+		:rtype: Observation
+		"""
+		copy=Observation(self.dimension)
+		copy.set_values(self.values)
+		return copy
+
+

@@ -1,12 +1,28 @@
-.. _format:
-Format des données
+.. _data:
+Traitement des données
 ================================
 
-Les formats suivants de fichiers sont à respecter :
+Lire, écrire et afficher des données
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Le fichier *es.py* regroupe l'ensemble des méthodes nécessaires à la lecture, à l'écriture et à l'affichage
+des données.
+
+.. automodule:: es
+	:members:
+
+
+
+
+.. _format:
+Format des données
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Les formats des fichiers d'entrée et de dortie *.csv* sont les suivants :
 
 
 Le fichier des données d’entrée
---------------------------------------------
+---------------------------------------------------------------------
 ./input/input.csv doit respecter le format suivant :
 
 	.. code-block:: html
@@ -19,7 +35,7 @@ Le fichier des données d’entrée
 
 
 Le fichier des données affectées
---------------------------------------------
+---------------------------------------------------------------------
 ./output/affectation.csv respecte le format suivant :
 
 	.. code-block:: html
@@ -32,7 +48,7 @@ Le fichier des données affectées
 
 
 Le fichier des centres
--------------------------------------------
+---------------------------------------------------------------------
 ./output/centroid.csv respecte le format suivant :
 
 	.. code-block:: html

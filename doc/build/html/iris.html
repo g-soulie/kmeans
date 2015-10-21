@@ -85,7 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="format.html">Format des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
@@ -135,6 +135,33 @@
             
   <div class="section" id="les-donnees-iris">
 <h1>Les données Iris<a class="headerlink" href="#les-donnees-iris" title="Permalink to this headline">¶</a></h1>
+<p>Le fichier <em>genData.py</em> permet de générer les données iris, grâce à la commande suivante :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type iris
+</pre></div>
+</div>
+</div></blockquote>
+<p>La méthode utilisée est alors gen_iris_data, qui récupére en fait le fichier iris.csv déjà créé.</p>
+<dl class="function">
+<dt id="genData.gen_iris_data">
+<code class="descclassname">genData.</code><code class="descname">gen_iris_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/genData.html#gen_iris_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#genData.gen_iris_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Génére les données de type iris</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Il est également possible d&#8217;afficher les deux premières coordonnées des données générées avec l&#8217;option -d :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type iris -d True
+</pre></div>
+</div>
+</div></blockquote>
 </div>
 
 
