@@ -2,6 +2,9 @@
 
 import random
 import sys
+import Observation
+import matplotlib.pyplot as plt
+import commands
 
 def read_data(filename, skip_first_line = False, ignore_first_column = False):
     '''
@@ -52,47 +55,90 @@ def write_data(data, filename):
         f.write(','.join([str(x) for x in item]))
         f.write('\n')
     f.close()
-
-def generate_random_data(nb_objs, nb_attrs, frand = random.random):
-    '''
-    Generates a matrix of random data.
-    
-    @param frand: the fonction used to generate random values.
-        It defaults to random.random.
-        Example::
-
-            import random
-            generate_random_data(5, 6, lambda: random.gauss(0, 1))
-    
-    @return: a matrix with nb_objs rows and nb_attrs+1 columns. The 1st
-        column is filled with line numbers (integers, from 1 to nb_objs).
-    '''
-    data = []
-    for i in range(nb_objs):
-        #line = [i+1]
-        #for j in range(numAtt):
-        #    line.append(frand())
-        line = [i+1] + map(lambda x: frand(), range(nb_attrs))
-        data.append(line)
-    return(data)
         
 
-# Exemples d'utilisation
+def read_kmeans_input():
+    """
+    This fonction reads the file "input.csv" within the input folder
 
-# D'abord on génère des données aléatoires
+    :return population based on the input file
+    :rtype: Observation[]
+    """
+    population=[]
+    data = read_data('./input/input.csv',ignore_first_column = True,skip_first_line = True)
+    dimension=len(data[0])-1
+    for i in range(len(data)):
+        population.append(Observation(dimension))
+        population[i].set_values(data[i])
+    return population
 
-data = generate_random_data(5,6)
+def write_kmeans_output(population,centroids,affectation):
+    """
+    This fonction writes the files *affectation.csv* and *centroids.csv* in the output folder.
 
-# Ensuite on ecrit ces donnees dans un fichier
+    :type   population: Observation[]
+    :arg    population: set of observations
+    :type   centroids: Observation[]
+    :arg    centroids: set of centroids
+    :type   affectation: int[]
+    :arg    affectation: list of the observation's centroid label 
+    :rtype: void
+    """
+    #Ecriture du fichier centroid.csv :
+    data=[["# no_centre"]]
+    for i in range(dimension):
+        data[0].append("attribut_"+str(i))
+    for i in range(len(centroids)):
+        data.append([i])
+        for j in range(len(centroids[i].values)):
+            data[i+1].append(centroids[i].values[j])
+    commands.getoutput("mkdir ./output/")
+    commands.getoutput("rm ./output/centroids.csv")
+    write_data(data,'./output/centroids.csv')
 
-write_data(data, "out.csv")
+    #Ecriture du fichier affectation.csv :
+    data=[["# no_observation"]]
+    for i in range(dimension):
+        data[0].append("attribut_"+str(i))
+    data[0].append("no_classe")
+    for i in range(len(population)):
+        data.append([i])
+        for j in range(dimension):
+            data[i+1].append(population[i].values[j])
+        data[i+1].append(affectation[i])
+    commands.getoutput("rm ./output/affectation.csv")
+    write_data(data,'./output/affectation.csv')
 
-# Puis on relit ces donnees a partir du fichier
 
-data_read = read_data("out.csv")
+def display(population,centroids,title):
+    """
+    This fonction is used to display the population and the centroids on a graph
 
-# Et on affiche les 2 jeux de donnees ainsi obtenus
-
-print(data)
-
-print(data_read)
+    :type   population: Observation[]
+    :arg    population: set of observations
+    :type   centroids: Observation[]
+    :arg    centroids: set of centroids
+    :type   titre: String
+    :arg    titre: name of the graphic
+    :rtype: void
+    """
+    x=[]
+    y=[]
+    xcentroids=[]
+    ycentroids=[]
+    for i in range(len(population)):
+        x.append((population[i].values)[0])
+    for i in range(len(population)):
+        y.append(population[i].values[1])
+    plt.scatter(x,y,s=1)
+    if not centroids is None:
+        for i in range(len(centroids)):
+            xaffectation.append((centroids[i].values)[0])
+        for i in range(len(centroids)):
+            yaffectation.append(centroids[i].values[1])
+        plt.scatter(xcentroids,ycentroids,s=100,c='red')
+    plt.title(title)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.savefig('ScatterPlot.png')
+    plt.show()
