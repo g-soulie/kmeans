@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation du projet K-means : &mdash; K_means 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="K_means 1.0 documentation" href="#"/>
+        <link rel="next" title="Introduction" href="introduction.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> K_means
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">K_means</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="#">Docs</a> &raquo;</li>
+      
+    <li>Documentation du projet K-means :</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentation-du-projet-k-means">
+<h1>Documentation du projet K-means :<a class="headerlink" href="#documentation-du-projet-k-means" title="Permalink to this headline">¶</a></h1>
+<p>L&#8217;ensemble des sources de ce projet est disponible sur <a class="reference external" href="http://github.com/pikkendorff/kmeans">github</a> :</p>
+<p>Sous linux, vous pouvez facilement l&#8217;importer en tapant :</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="n">mkdir</span> <span class="n">kmeans</span><span class="o">/</span>
+<span class="n">cd</span> <span class="n">kmeans</span>
+<span class="n">git</span> <span class="n">init</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pikkendorff</span><span class="o">/</span><span class="n">kmeans</span> <span class="n">master</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>L&#8217;architecture générale du projet est la suivante :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>./kmeans/
+      |--doc/
+      |--input/
+      |    |--input.csv
+      |    |--bretagne.jpg
+      |    |--.iris.csv
+      |--output/
+      |    |--affectation.csv
+      |    |--centroids.csv
+      |--kmeans.py
+      |--es.py
+      |--genData.py
+      |--Observation.py
+</pre></div>
+</div>
+</div></blockquote>
+<p>Lorsqu&#8217;on lance kmeans, les données présentes dans le fichier <em>./input/input.csv</em> sont étudiées, et le résultat est écrit dans deux fichiers, <em>./output/affectation.csv</em> et <em>./output/centroids.csv</em></p>
+<p>Les fichiers <em>{genAleatoire</em>, <em>genIris</em> et <em>genPicture}.py</em> vous permettent de générer un fichier input.csv corrsespondant respectivement aux sections <a class="reference internal" href="nD.html#random"><span>Données aléatoires</span></a>, <a class="reference internal" href="iris.html#iris"><span>Données Iris</span></a> et <a class="reference internal" href="sky.html#sky"><span>La Bretagne vue du ciel</span></a>. Bien évidemment, vous pouvez utiliser l&#8217;algorithme avec un autre jeu de données de votre choix, pourvu que le fichier <em>input.csv</em> respecte le bon format (cf <a class="reference internal" href="data.html#format"><span>Format des données</span></a>).</p>
+</div>
+<div class="section" id="table-des-matieres">
+<h1>Table des matières<a class="headerlink" href="#table-des-matieres" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#apprentissage-automatique-machine-learning">Apprentissage Automatique (<em>Machine learning</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#apprentissage-supervise">Apprentissage supervisé</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#apprentissage-non-supervise">Apprentissage non supervisé</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="impl.html#la-fonction-compute-kmeans">La fonction compute_kmeans</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="impl.html#phase-1-initialisation">Phase 1 - Initialisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="impl.html#phase-2-affectation">Phase 2 - Affectation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="impl.html#phase-3-calculation">Phase 3 - Calculation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="impl.html#la-classe-observation">La classe Observation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html#lire-ecrire-et-afficher-des-donnees">Lire, écrire et afficher des données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html#format-des-donnees">Format des données</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data.html#le-fichier-des-donnees-dentree">Le fichier des données d’entrée</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#le-fichier-des-donnees-affectees">Le fichier des données affectées</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html#le-fichier-des-centres">Le fichier des centres</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
+</ul>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
+</ul>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="introduction.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, B. Pacreau, G. Soulié.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
