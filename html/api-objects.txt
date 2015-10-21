@@ -1,8 +1,0 @@
-kmeans	kmeans-module.html
-kmeans.__package__	kmeans-module.html#__package__
-kmeans.read	kmeans-module.html#read
-kmeans.index_min	kmeans-module.html#index_min
-kmeans.pi	kmeans-module.html#pi
-kmeans.e	kmeans-module.html#e
-kmeans.write_output	kmeans-module.html#write_output
-kmeans.display	kmeans-module.html#display
