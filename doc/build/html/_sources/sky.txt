@@ -7,7 +7,7 @@ Il faut pour cela placer l'image dans le dossier input et utiliser la commande s
 
 	.. code-block:: html
 
-		python genData.py -type picture -name nom_de_la_photo
+		python genData.py -t picture -n nom_de_la_photo
 
 La méthode utilisée est alors gen_picture_data.
 
@@ -18,9 +18,9 @@ Il est également possible d'afficher les données générées avec l'option -d 
 
 	.. code-block:: html
 
-		python genData.py -type picture -name bretagne.jpg -d True
+		python genData.py -t picture -n bretagne.jpg -d True
 
-Par défault, si l'option -name n'est pas utilisé, l'image bretagne.jpg est utilisé.
+Par défault, si l'option -n n'est pas utilisé, l'image bretagne.jpg est utilisé.
 Voivi l'image originale :
 
 .. image:: ../../input/bretagne.jpg

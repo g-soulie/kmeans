@@ -158,6 +158,8 @@ def compute_kmeans(k,population,centroids = None,display=False,\
 	:param display: if True, the first and the second coordinate of the 
 		populations are displayed setep by step
 	:type display: boolean
+	:arg title: title to print on top of the figures
+	:type title: String
 	:return: a table of centroids and a table of affectations
 	:rtype: Observation[][]
 	"""
@@ -267,7 +269,7 @@ if __name__ == '__main__':
 	"""
 	
 	#Set the default options:
-	options={"-k":"1","-d":False,"-g":"True","-a":"1"}
+	options={"-k":"1","-d":False,"-g":"True","-a":"0.001"}
 
 	#Read the options: 
 	i=1

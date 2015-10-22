@@ -2,15 +2,16 @@
 """
 Created on October 2015
 @author: B.pacreau, G. Soulié
+
+Class that represents an element of a population to 
+analyze.
+
 """
 
 from math import *
 import random
 
 class Observation:
-	"""
-    Représente une observation
-    """
 
 	def __init__(self,dimension):
 		"""

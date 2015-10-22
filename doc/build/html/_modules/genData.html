@@ -83,10 +83,11 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nD.html">Données aléatoires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sky.html">La Bretagne vue du ciel !</a></li>
 </ul>
@@ -215,13 +216,13 @@
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Generate some input data for the kmeans algorithms.</span>
 
-<span class="sd">	:option -type: type of generated data. Can be &quot;random&quot;, &quot;iris&quot; or &quot;picture&quot;</span>
-<span class="sd">	:option -name: name of the picture to load. require *-type picture*</span>
-<span class="sd">	:option -s: number of the gaussian sample to load. require *-type random*</span>
+<span class="sd">	:option -t: type of generated data. Can be &quot;random&quot;, &quot;iris&quot; or &quot;picture&quot;</span>
+<span class="sd">	:option -n: name of the picture to load. require *-t picture*</span>
+<span class="sd">	:option -s: number of the gaussian sample to load. require *-t random*</span>
 
 
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;-type&quot;</span><span class="p">:</span><span class="s">&quot;random&quot;</span><span class="p">,</span><span class="s">&quot;-name&quot;</span><span class="p">:</span><span class="s">&quot;bretagne.jpg&quot;</span><span class="p">,</span><span class="s">&quot;-s&quot;</span><span class="p">:</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="s">&quot;-d&quot;</span><span class="p">:</span><span class="s">&quot;False&quot;</span><span class="p">}</span>
+	<span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;-t&quot;</span><span class="p">:</span><span class="s">&quot;random&quot;</span><span class="p">,</span><span class="s">&quot;-n&quot;</span><span class="p">:</span><span class="s">&quot;bretagne.jpg&quot;</span><span class="p">,</span><span class="s">&quot;-s&quot;</span><span class="p">:</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="s">&quot;-d&quot;</span><span class="p">:</span><span class="s">&quot;False&quot;</span><span class="p">}</span>
 
 	<span class="c">#Read and cast the options: </span>
 	<span class="n">i</span><span class="o">=</span><span class="mi">1</span>
@@ -232,11 +233,10 @@
 	    <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
 
 	<span class="n">options</span><span class="p">[</span><span class="s">&quot;-s&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&quot;-s&quot;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
-	<span class="n">options</span><span class="p">[</span><span class="s">&quot;-d&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&quot;-d&quot;</span><span class="p">])</span>
 
 
 	<span class="c">#Gaussians data generation case:</span>
-	<span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;random&quot;</span><span class="p">:</span>
+	<span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-t&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;random&quot;</span><span class="p">:</span>
 		<span class="k">print</span><span class="p">(</span><span class="s">&quot;génération de donnée aléatoire...&quot;</span><span class="p">)</span>
 		<span class="n">gaussienne_sample</span><span class="o">=</span><span class="p">[]</span>
 		<span class="n">gaussienne_sample</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&quot;1&quot;</span><span class="p">:{</span><span class="s">&quot;direction&quot;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],</span><span class="s">&quot;centre&quot;</span><span class="p">:[</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">]},</span>\
@@ -249,15 +249,15 @@
 		<span class="k">print</span><span class="p">(</span><span class="s">&quot;... gaussiennes &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&quot;-s&quot;</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; générées.&quot;</span><span class="p">)</span>
 
 	<span class="c">#Iris data generation case:</span>
-	<span class="k">elif</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;iris&quot;</span><span class="p">:</span>
+	<span class="k">elif</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-t&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;iris&quot;</span><span class="p">:</span>
 		<span class="k">print</span><span class="p">(</span><span class="s">&quot;generation des données iris...&quot;</span><span class="p">)</span>
 		<span class="n">gen_iris_data</span><span class="p">()</span>
 		<span class="k">print</span><span class="p">(</span><span class="s">&quot;... données iris générées.&quot;</span><span class="p">)</span>
 
 	<span class="c">#picture data generation case:</span>
-	<span class="k">elif</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;picture&quot;</span><span class="p">:</span>
+	<span class="k">elif</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-t&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;picture&quot;</span><span class="p">:</span>
 		<span class="k">print</span><span class="p">(</span><span class="s">&quot;génération des données d&#39;image...&quot;</span><span class="p">)</span>
-		<span class="n">gen_picture_data</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&quot;-name&quot;</span><span class="p">])</span>
+		<span class="n">gen_picture_data</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&quot;-n&quot;</span><span class="p">])</span>
 		<span class="k">print</span><span class="p">(</span><span class="s">&quot;... données d&#39;image chargées.&quot;</span><span class="p">)</span>
 
 	<span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-d&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;True&quot;</span><span class="p">:</span>

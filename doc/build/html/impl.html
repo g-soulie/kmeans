@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
-        <link rel="next" title="Etude théorique de G-means" href="gmeans.html"/>
-        <link rel="prev" title="Etude théorique de k-means" href="kmeans.html"/> 
+        <link rel="next" title="Traitement des données" href="data.html"/>
+        <link rel="prev" title="Observation" href="Observation.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,6 +84,8 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Implémentation de k-means</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#la-fonction-compute-kmeans">La fonction compute_kmeans</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#phase-1-initialisation">Phase 1 - Initialisation</a></li>
@@ -91,12 +93,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#phase-3-calculation">Phase 3 - Calculation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#la-classe-observation">La classe Observation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nD.html">Données aléatoires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
 </ul>
@@ -168,6 +168,7 @@ kmeans.py et Observation.py</p>
 <li><strong>centroids</strong> &#8211; the initial positions of centroids</li>
 <li><strong>display</strong> (<em>boolean</em>) &#8211; if True, the first and the second coordinate of the 
 populations are displayed setep by step</li>
+<li><strong>title</strong> (<em>String</em>) &#8211; title to print on top of the figures</li>
 </ul>
 </td>
 </tr>
@@ -278,107 +279,6 @@ opérations d&#8217;écriture, de lecture et d&#8217;affichages des <a class="re
 </div>
 </div>
 </div>
-<div class="section" id="la-classe-observation">
-<h2>La classe Observation<a class="headerlink" href="#la-classe-observation" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="kmeans.Observation">
-<em class="property">class </em><code class="descclassname">kmeans.</code><code class="descname">Observation</code><span class="sig-paren">(</span><em>dimension</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Représente une observation</p>
-<dl class="method">
-<dt id="kmeans.Observation.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>dimension</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new observation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dimension</strong> (<em>int</em>) &#8211; dimension of the observation</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="kmeans.Observation.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add another observation values to self.values, with ponderation by self.weight.
-Typically use wen this instanciation of Observation is a centroid.
-This function permits to compute easily a barycentre of several observations</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation</strong> (<a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; the observation to add to the barycentre</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="kmeans.Observation.copy">
-<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.copy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return another obseration with the same values</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation">Observation</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="kmeans.Observation.dist">
-<code class="descname">dist</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.dist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.dist" title="Permalink to this definition">¶</a></dt>
-<dd><p>compute and return the euclidian distance between self                  and another observation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation</strong> (<a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; the observation to compute the distance with</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="kmeans.Observation.set_values">
-<code class="descname">set_values</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.set_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.set_values" title="Permalink to this definition">¶</a></dt>
-<dd><p>set the values of the observation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> (<em>float[]</em>) &#8211; valeurs de l&#8217;observation</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">void</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="kmeans.Observation.substract">
-<code class="descname">substract</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.substract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.substract" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an obseration which is the substraction of self - observation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation</strong> (<a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; the observation to compute substraction with</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation">Observation</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 </div>
 
 
@@ -388,10 +288,10 @@ This function permits to compute easily a barycentre of several observations</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="gmeans.html" class="btn btn-neutral float-right" title="Etude théorique de G-means" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="data.html" class="btn btn-neutral float-right" title="Traitement des données" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="kmeans.html" class="btn btn-neutral" title="Etude théorique de k-means" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Observation.html" class="btn btn-neutral" title="Observation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

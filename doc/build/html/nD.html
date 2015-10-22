@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Générations aléatoires de données &mdash; K_means 1.0 documentation</title>
+  <title>Données aléatoires &mdash; K_means 1.0 documentation</title>
   
 
   
@@ -84,10 +84,11 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Générations aléatoires de données</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Données aléatoires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
 </ul>
@@ -120,7 +121,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Générations aléatoires de données</li>
+    <li>Données aléatoires</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -134,11 +135,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="generations-aleatoires-de-donnees">
-<h1>Générations aléatoires de données<a class="headerlink" href="#generations-aleatoires-de-donnees" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="donnees-aleatoires">
+<h1>Données aléatoires<a class="headerlink" href="#donnees-aleatoires" title="Permalink to this headline">¶</a></h1>
 <p>Le fichier <em>genData.py</em> permet de générer des gaussiennes en dimension n, grâce à la commande suivante :</p>
 <blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type random
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -t random
 </pre></div>
 </div>
 </div></blockquote>
@@ -168,19 +169,40 @@
 </table>
 </dd></dl>
 
-<p>Plusieurs configurations de gaussiennes en 2 dimensions sont proposées en exemple.
-Il est possible de changer l&#8217;exemple générer en utilisant l&#8217;option -s :</p>
+<p>Plusieurs configurations de gaussiennes sont proposées en exemple.
+Il est possible de changer l&#8217;exemple généré en utilisant l&#8217;option -s : par exemple, -s 1 va générer le premier exemple, -s 2 le deuxième, etc.</p>
 <blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type random -s 1
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -t random -s 1
 </pre></div>
 </div>
 </div></blockquote>
 <p>Il est également possible d&#8217;afficher les deux premières coordonnées des données générées avec l&#8217;option -d :</p>
 <blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type random -s 1 -d True
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -t random -s 1 -d True
 </pre></div>
 </div>
 </div></blockquote>
+<p>Par exemple, si l&#8217;on essaie d&#8217;analyser les observations suivantes :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -s 3 -d True
+</pre></div>
+</div>
+</div></blockquote>
+<img alt="_images/gaussiennes.png" class="align-center" src="_images/gaussiennes.png" />
+<p>k-means avec k = 10 nous permet d&#8217;obtenir le résultat suivant :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python kmeans.py -g False -k 10 -d True
+</pre></div>
+</div>
+</div></blockquote>
+<img alt="_images/gaussiennes-k.png" class="align-center" src="_images/gaussiennes-k.png" />
+<p>Si les données sont bien représentés, on voit toutefois qu&#8217;il y évidemment plusieurs centroids par gaussiennes. Si on espère trouver un centroid par gaussienne, il faut lancer g-means :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python kmeans.py -d True
+</pre></div>
+</div>
+</div></blockquote>
+<img alt="_images/gaussiennes-g.png" class="align-center" src="_images/gaussiennes-g.png" />
 </div>
 
 

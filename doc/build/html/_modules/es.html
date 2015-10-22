@@ -83,10 +83,11 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nD.html">Données aléatoires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sky.html">La Bretagne vue du ciel !</a></li>
 </ul>
@@ -285,14 +286,14 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This fonction is used to display the population and the centroids on a graph</span>
 
-<span class="sd">    :type   population: Observation[]</span>
+<span class="sd">    :type   population: observation[]</span>
 <span class="sd">    :arg    population: set of observations</span>
 <span class="sd">    :type   centroids: Observation[]</span>
 <span class="sd">    :arg    centroids: set of centroids</span>
-<span class="sd">    :type   titre: String</span>
-<span class="sd">    :arg    titre: name of the graphic</span>
-<span class="sd">    :arg    keep : if true, the figure stay open until the user close it</span>
-<span class="sd">    :type   keep : boolean</span>
+<span class="sd">    :type   title: String</span>
+<span class="sd">    :arg    title: name of the graphic</span>
+<span class="sd">    :arg    keep: if true, the figure stay open until the user close it</span>
+<span class="sd">    :type   keep: boolean</span>
 <span class="sd">    :rtype: void</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -336,8 +337,8 @@
 
 <span class="sd">    :arg x: list to display</span>
 <span class="sd">    :type x: float[]</span>
-<span class="sd">    :param titre: the title to display</span>
-<span class="sd">    :type titre: String</span>
+<span class="sd">    :param title: the title to display</span>
+<span class="sd">    :type title: String</span>
 <span class="sd">    :rtype: void</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

@@ -13,10 +13,7 @@ Sous linux, vous pouvez facilement l'importer en tapant :
 
 	.. code-block:: python
 
-		mkdir kmeans/
-		cd kmeans
-		git init
-		git remote http://github.com/pikkendorff/kmeans master
+		git clone http://github.com/pikkendorff/kmeans
 
 L'architecture générale du projet est la suivante :
 
@@ -41,20 +38,17 @@ L'architecture générale du projet est la suivante :
 Lorsqu'on lance kmeans, les données présentes dans le fichier *./input/input.csv* sont étudiées, et le résultat est écrit dans deux fichiers, *./output/affectation.csv* et *./output/centroids.csv*
 
 
-Les fichiers *{genAleatoire*, *genIris* et *genPicture}.py* vous permettent de générer un fichier input.csv corrsespondant respectivement aux sections :ref:`Données aléatoires <random>`, :ref:`Données Iris <iris>` et :ref:`La Bretagne vue du ciel <sky>`. Bien évidemment, vous pouvez utiliser l'algorithme avec un autre jeu de données de votre choix, pourvu que le fichier *input.csv* respecte le bon format (cf :ref:`Format des données <format>`).
+Le fichier *genData.py* vous permet de générer un fichier input.csv. Vous pouvez générer différents type de données, à savoir : des :ref:`données aléatoires <random>`, des :ref:`données Iris <iris>` ou encore :ref:`La Bretagne vue du ciel <sky>`. Bien évidemment, vous pouvez utiliser l'algorithme avec un autre jeu de données de votre choix, pourvu que le fichier *input.csv* respecte le bon format (cf :ref:`Format des données <format>`).
 
 
-
-Table des matières
-====================================
 
 .. toctree::
 
-
    introduction
    kmeans
-   impl
    gmeans
+   Observation
+   impl
    data
    nD
    iris

@@ -6,7 +6,7 @@ Le fichier *genData.py* permet de générer les données iris, grâce à la comm
 
 	.. code-block:: html
 
-		python genData.py -type iris
+		python genData.py -t iris
 
 La méthode utilisée est alors gen_iris_data, qui récupére en fait le fichier iris.csv déjà créé.
 
@@ -17,4 +17,4 @@ Il est également possible d'afficher les deux premières coordonnées des donn�
 
 	.. code-block:: html
 
-		python genData.py -type iris -d True
+		python genData.py -t iris -d True

@@ -121,10 +121,4 @@ Phase 3 - Calculation
 
 
 
-La classe Observation
--------------------------------------
 
-
-.. autoclass:: Observation
-	:members:
-	:special-members:

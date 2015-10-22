@@ -79,13 +79,13 @@ if __name__ == "__main__":
 	"""
 	Generate some input data for the kmeans algorithms.
 
-	:option -type: type of generated data. Can be "random", "iris" or "picture"
-	:option -name: name of the picture to load. require *-type picture*
-	:option -s: number of the gaussian sample to load. require *-type random*
+	:option -t: type of generated data. Can be "random", "iris" or "picture"
+	:option -n: name of the picture to load. require *-t picture*
+	:option -s: number of the gaussian sample to load. require *-t random*
 
 
 	"""
-	options={"-type":"random","-name":"bretagne.jpg","-s":"1","-d":"False"}
+	options={"-t":"random","-n":"bretagne.jpg","-s":"1","-d":"False"}
 
 	#Read and cast the options: 
 	i=1
@@ -96,11 +96,10 @@ if __name__ == "__main__":
 	    i=i+1
 
 	options["-s"]=int(options["-s"])-1
-	options["-d"]=bool(options["-d"])
 
 
 	#Gaussians data generation case:
-	if options["-type"] == "random":
+	if options["-t"] == "random":
 		print("génération de donnée aléatoire...")
 		gaussienne_sample=[]
 		gaussienne_sample.append({"1":{"direction":[1,0.5],"centre":[5,3]},\
@@ -113,15 +112,15 @@ if __name__ == "__main__":
 		print("... gaussiennes "+str(options["-s"]+1)+" générées.")
 
 	#Iris data generation case:
-	elif options["-type"] == "iris":
+	elif options["-t"] == "iris":
 		print("generation des données iris...")
 		gen_iris_data()
 		print("... données iris générées.")
 
 	#picture data generation case:
-	elif options["-type"] == "picture":
+	elif options["-t"] == "picture":
 		print("génération des données d'image...")
-		gen_picture_data(options["-name"])
+		gen_picture_data(options["-n"])
 		print("... données d'image chargées.")
 
 	if options["-d"] == "True":

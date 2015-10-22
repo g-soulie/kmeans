@@ -83,10 +83,11 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nD.html">Données aléatoires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sky.html">La Bretagne vue du ciel !</a></li>
 </ul>
@@ -294,6 +295,8 @@
 <span class="sd">	:param display: if True, the first and the second coordinate of the </span>
 <span class="sd">		populations are displayed setep by step</span>
 <span class="sd">	:type display: boolean</span>
+<span class="sd">	:arg title: title to print on top of the figures</span>
+<span class="sd">	:type title: String</span>
 <span class="sd">	:return: a table of centroids and a table of affectations</span>
 <span class="sd">	:rtype: Observation[][]</span>
 <span class="sd">	&quot;&quot;&quot;</span>
@@ -403,7 +406,7 @@
 <span class="sd">	&quot;&quot;&quot;</span>
 	
 	<span class="c">#Set the default options:</span>
-	<span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;-k&quot;</span><span class="p">:</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="s">&quot;-d&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span><span class="s">&quot;-g&quot;</span><span class="p">:</span><span class="s">&quot;True&quot;</span><span class="p">,</span><span class="s">&quot;-a&quot;</span><span class="p">:</span><span class="s">&quot;1&quot;</span><span class="p">}</span>
+	<span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;-k&quot;</span><span class="p">:</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="s">&quot;-d&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span><span class="s">&quot;-g&quot;</span><span class="p">:</span><span class="s">&quot;True&quot;</span><span class="p">,</span><span class="s">&quot;-a&quot;</span><span class="p">:</span><span class="s">&quot;0.001&quot;</span><span class="p">}</span>
 
 	<span class="c">#Read the options: </span>
 	<span class="n">i</span><span class="o">=</span><span class="mi">1</span>

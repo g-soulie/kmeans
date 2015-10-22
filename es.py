@@ -149,14 +149,14 @@ def display(population,centroids,title,keep):
     """
     This fonction is used to display the population and the centroids on a graph
 
-    :type   population: Observation[]
+    :type   population: observation[]
     :arg    population: set of observations
     :type   centroids: Observation[]
     :arg    centroids: set of centroids
-    :type   titre: String
-    :arg    titre: name of the graphic
-    :arg    keep : if true, the figure stay open until the user close it
-    :type   keep : boolean
+    :type   title: String
+    :arg    title: name of the graphic
+    :arg    keep: if true, the figure stay open until the user close it
+    :type   keep: boolean
     :rtype: void
     """
 
@@ -200,8 +200,8 @@ def display_histogramme(x,title=""):
 
     :arg x: list to display
     :type x: float[]
-    :param titre: the title to display
-    :type titre: String
+    :param title: the title to display
+    :type title: String
     :rtype: void
     """
 

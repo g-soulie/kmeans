@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
-        <link rel="next" title="Générations aléatoires de données" href="nD.html"/>
-        <link rel="prev" title="Etude théorique de G-means" href="gmeans.html"/> 
+        <link rel="next" title="Données aléatoires" href="nD.html"/>
+        <link rel="prev" title="Implémentation de k-means" href="impl.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,8 +84,9 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Traitement des données</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lire-ecrire-et-afficher-des-donnees">Lire, écrire et afficher des données</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#format-des-donnees">Format des données</a><ul>
@@ -96,7 +97,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nD.html">Données aléatoires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
 </ul>
@@ -157,18 +158,19 @@ des données.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>population</strong> (<em>Observation[]</em>) &#8211; set of observations</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>population</strong> (<em>observation[]</em>) &#8211; set of observations</li>
 <li><strong>centroids</strong> (<em>Observation[]</em>) &#8211; set of centroids</li>
-<li><strong>titre</strong> (<em>String</em>) &#8211; name of the graphic</li>
+<li><strong>title</strong> (<em>String</em>) &#8211; name of the graphic</li>
+<li><strong>keep</strong> (<em>boolean</em>) &#8211; if true, the figure stay open until the user close it</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>:arg    keep : if true, the figure stay open until the user close it
-:type   keep : boolean
-:rtype: void</p>
 </dd></dl>
 
 <dl class="function">
@@ -181,7 +183,7 @@ des données.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>x</strong> (<em>float[]</em>) &#8211; list to display</li>
-<li><strong>titre</strong> (<em>String</em>) &#8211; the title to display</li>
+<li><strong>title</strong> (<em>String</em>) &#8211; the title to display</li>
 </ul>
 </td>
 </tr>
@@ -346,10 +348,10 @@ The file is created if necessary; if it exists, it is overwritten.</li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nD.html" class="btn btn-neutral float-right" title="Générations aléatoires de données" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nD.html" class="btn btn-neutral float-right" title="Données aléatoires" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="gmeans.html" class="btn btn-neutral" title="Etude théorique de G-means" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="impl.html" class="btn btn-neutral" title="Implémentation de k-means" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

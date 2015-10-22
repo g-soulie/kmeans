@@ -83,10 +83,11 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nD.html">Données aléatoires</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">La Bretagne vue du ciel !</a></li>
 </ul>
@@ -138,7 +139,7 @@
 <p>Le fichier <em>genData.py</em> permet de générer des données à partir une image satellite de nuit.
 Il faut pour cela placer l&#8217;image dans le dossier input et utiliser la commande suivante :</p>
 <blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type picture -name nom_de_la_photo
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -t picture -n nom_de_la_photo
 </pre></div>
 </div>
 </div></blockquote>
@@ -161,11 +162,11 @@ Il faut pour cela placer l&#8217;image dans le dossier input et utiliser la comm
 
 <p>Il est également possible d&#8217;afficher les données générées avec l&#8217;option -d :</p>
 <blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type picture -name bretagne.jpg -d True
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -t picture -n bretagne.jpg -d True
 </pre></div>
 </div>
 </div></blockquote>
-<p>Par défault, si l&#8217;option -name n&#8217;est pas utilisé, l&#8217;image bretagne.jpg est utilisé.
+<p>Par défault, si l&#8217;option -n n&#8217;est pas utilisé, l&#8217;image bretagne.jpg est utilisé.
 Voivi l&#8217;image originale :</p>
 <img alt="_images/bretagne.jpg" class="align-center" src="_images/bretagne.jpg" />
 <p>Voici ensuite les données générées grâce à cette image :</p>
