@@ -5,6 +5,7 @@ import sys
 from Observation import *
 import matplotlib.pyplot as plt
 import commands
+import math
 
 def read_data(filename, skip_first_line = False, ignore_first_column = False):
     '''
@@ -160,17 +161,20 @@ def display(population,centroids,title,keep):
     """
 
     plt.clf()
+    plt.hold(True)
     x=[]
     y=[]
     xcentroids=[]
     ycentroids=[]
     
-    
+    #Add the observations to the figures
     for i in range(len(population)):
         x.append((population[i].values)[0])
     for i in range(len(population)):
         y.append((population[i].values)[1])
     plt.scatter(x,y,s=1)
+
+    #Add the clusters to the figure
     if not centroids is None:
         for i in range(len(centroids)):
             xcentroids.append((centroids[i].values)[0])
@@ -186,7 +190,32 @@ def display(population,centroids,title,keep):
 
     if keep:
         plt.ioff()
-        plt.pause(10)
+        plt.waitforbuttonpress(timeout=5)
     else:
-        plt.pause(0.1)
+        plt.waitforbuttonpress(timeout=0.005)
+
+def display_histogramme(x,title=""):
+    """
+    display the histogramm of a vector
+
+    :arg x: list to display
+    :type x: float[]
+    :param titre: the title to display
+    :type titre: String
+    :rtype: void
+    """
+
+    #number of bars
+    nb_bins = math.sqrt(x.shape[0])
+
+    #time to keep displayed 
+    time = 4
+
+    plt.clf()
+    plt.hold(True)
+    plt.title(title)
+    plt.hist(x,nb_bins)
+    plt.waitforbuttonpress(timeout=time)
+
+
 

@@ -75,4 +75,17 @@ class Observation:
 		copy.set_values(self.values)
 		return copy
 
+	def substract(self,observation):
+		"""
+		Return an obseration which is the substraction of self - observation
+
+		:arg observation: the observation to compute substraction with
+		:type observation: Observation
+		:rtype: Observation
+		"""
+		sub=Observation(self.dimension)
+		for i in range(self.dimension):
+			sub.values[i] = self.values[i]-observation.values[i]
+		return sub
+
 

@@ -54,6 +54,7 @@ Table des matières
    introduction
    kmeans
    impl
+   gmeans
    data
    nD
    iris

@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de G-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nD.html">Générations aléatoires de données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../iris.html">Les données Iris</a></li>
@@ -209,6 +210,19 @@
 		<span class="n">copy</span><span class="o">=</span><span class="n">Observation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
 		<span class="n">copy</span><span class="o">.</span><span class="n">set_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 		<span class="k">return</span> <span class="n">copy</span>
+</div>
+<div class="viewcode-block" id="Observation.substract"><a class="viewcode-back" href="../impl.html#kmeans.Observation.substract">[docs]</a>	<span class="k">def</span> <span class="nf">substract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">observation</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Return an obseration which is the substraction of self - observation</span>
+
+<span class="sd">		:arg observation: the observation to compute substraction with</span>
+<span class="sd">		:type observation: Observation</span>
+<span class="sd">		:rtype: Observation</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">sub</span><span class="o">=</span><span class="n">Observation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">):</span>
+			<span class="n">sub</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">observation</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+		<span class="k">return</span> <span class="n">sub</span>
 </pre></div></div></div>
 
            </div>

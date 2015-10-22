@@ -8,7 +8,7 @@ import commands
 
 
 def gen_random_data(gaussiennes,dimension=2,\
-	taille_population=1000):
+	taille_population=10000):
 	"""
 	Génére des gaussiennes de dimension dimension, et de forme définies par
 		l'argument gaussienne.
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 	if options["-type"] == "random":
 		print("génération de donnée aléatoire...")
 		gaussienne_sample=[]
-		gaussienne_sample.append({"1":{"direction":[1,0.5],"centre":[1,1]},\
+		gaussienne_sample.append({"1":{"direction":[1,0.5],"centre":[5,3]},\
 			"2":{"direction":[0.1,1],"centre":[0,0]}})
 		gaussienne_sample.append({"1":{"direction":[1,0.5],"centre":[2,2]},\
 			"2":{"direction":[0.1,1],"centre":[0,0]}})
@@ -124,5 +124,5 @@ if __name__ == "__main__":
 		gen_picture_data(options["-name"])
 		print("... données d'image chargées.")
 
-	if options["-d"]:
+	if options["-d"] == "True":
 		es.display(es.read_kmeans_input(),None,"Generated datas :",True)

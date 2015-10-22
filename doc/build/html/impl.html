@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
-        <link rel="next" title="Traitement des données" href="data.html"/>
+        <link rel="next" title="Etude théorique de G-means" href="gmeans.html"/>
         <link rel="prev" title="Etude théorique de k-means" href="kmeans.html"/> 
 
   
@@ -94,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#la-classe-observation">La classe Observation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
@@ -151,21 +152,29 @@ kmeans.py et Observation.py</p>
 <h2>La fonction compute_kmeans<a class="headerlink" href="#la-fonction-compute-kmeans" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="kmeans.compute_kmeans">
-<code class="descclassname">kmeans.</code><code class="descname">compute_kmeans</code><span class="sig-paren">(</span><em>k</em>, <em>display=False</em>, <em>max_iteration=99999</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kmeans.html#compute_kmeans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.compute_kmeans" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">kmeans.</code><code class="descname">compute_kmeans</code><span class="sig-paren">(</span><em>k</em>, <em>population</em>, <em>centroids=None</em>, <em>display=False</em>, <em>max_iteration=99999</em>, <em>title=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kmeans.html#compute_kmeans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.compute_kmeans" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
-<dt>Compute and display the k-means algorithm on the input file </dt>
+<dt>Compute the k-means algorithm on the input file </dt>
 <dd>(<em>./input/input.csv</em>)</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>k</strong> (<em>int</em>) &#8211; the k of k-means : number of centroids</li>
+<li><strong>population</strong> (<em>Observation[]</em>) &#8211; the population of Observations tocompute k-means on.</li>
 <li><strong>max_iteration</strong> (<em>int</em>) &#8211; the number maximum of iteration we allow</li>
+<li><strong>centroids</strong> &#8211; the initial positions of centroids</li>
 <li><strong>display</strong> (<em>boolean</em>) &#8211; if True, the first and the second coordinate of the 
 populations are displayed setep by step</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a table of centroids and a table of affectations</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Observation[][]</p>
 </td>
 </tr>
 </tbody>
@@ -351,6 +360,22 @@ This function permits to compute easily a barycentre of several observations</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="kmeans.Observation.substract">
+<code class="descname">substract</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.substract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.substract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an obseration which is the substraction of self - observation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation</strong> (<a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; the observation to compute substraction with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation">Observation</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -363,7 +388,7 @@ This function permits to compute easily a barycentre of several observations</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="data.html" class="btn btn-neutral float-right" title="Traitement des données" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="gmeans.html" class="btn btn-neutral float-right" title="Etude théorique de G-means" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="kmeans.html" class="btn btn-neutral" title="Etude théorique de k-means" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
