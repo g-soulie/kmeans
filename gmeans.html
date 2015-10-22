@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>La Bretagne vue du ciel ! &mdash; K_means 1.0 documentation</title>
+  <title>Etude théorique de G-means &mdash; K_means 1.0 documentation</title>
   
 
   
@@ -31,7 +31,8 @@
 
   
     <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
-        <link rel="prev" title="Les données Iris" href="iris.html"/> 
+        <link rel="next" title="Traitement des données" href="data.html"/>
+        <link rel="prev" title="Implémentation de k-means" href="impl.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,11 +85,11 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Etude théorique de G-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nD.html">Générations aléatoires de données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">La Bretagne vue du ciel !</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
 </ul>
 
             
@@ -119,11 +120,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>La Bretagne vue du ciel !</li>
+    <li>Etude théorique de G-means</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/sky.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/gmeans.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -133,45 +134,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="la-bretagne-vue-du-ciel">
-<h1>La Bretagne vue du ciel !<a class="headerlink" href="#la-bretagne-vue-du-ciel" title="Permalink to this headline">¶</a></h1>
-<p>Le fichier <em>genData.py</em> permet de générer des données à partir une image satellite de nuit.
-Il faut pour cela placer l&#8217;image dans le dossier input et utiliser la commande suivante :</p>
-<blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type picture -name nom_de_la_photo
-</pre></div>
-</div>
-</div></blockquote>
-<p>La méthode utilisée est alors gen_picture_data.</p>
-<dl class="function">
-<dt id="genData.gen_picture_data">
-<code class="descclassname">genData.</code><code class="descname">gen_picture_data</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/genData.html#gen_picture_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#genData.gen_picture_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Génére les données en provenance d&#8217;une image placée dans le fichier input.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>String</em>) &#8211; nom de l&#8217;image à analyser.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">void</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<p>Il est également possible d&#8217;afficher les données générées avec l&#8217;option -d :</p>
-<blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>python genData.py -type picture -name bretagne.jpg -d True
-</pre></div>
-</div>
-</div></blockquote>
-<p>Par défault, si l&#8217;option -name n&#8217;est pas utilisé, l&#8217;image bretagne.jpg est utilisé.
-Voivi l&#8217;image originale :</p>
-<img alt="_images/bretagne.jpg" class="align-center" src="_images/bretagne.jpg" />
-<p>Voici ensuite les données générées grâce à cette image :</p>
-<img alt="_images/bretagne_genData.png" class="align-center" src="_images/bretagne_genData.png" />
-<p>Et enfin voici le résultat de kmeans sur ces images :</p>
-<img alt="_images/bretagne_traitedData.png" class="align-center" src="_images/bretagne_traitedData.png" />
+  <div class="section" id="etude-theorique-de-g-means">
+<h1>Etude théorique de G-means<a class="headerlink" href="#etude-theorique-de-g-means" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -181,8 +145,10 @@ Voivi l&#8217;image originale :</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="data.html" class="btn btn-neutral float-right" title="Traitement des données" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="iris.html" class="btn btn-neutral" title="Les données Iris" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="impl.html" class="btn btn-neutral" title="Implémentation de k-means" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
