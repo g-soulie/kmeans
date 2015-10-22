@@ -1,0 +1,1 @@
+Dossier où seront placés les fichiers de sortie (affectation.csv et centroids.csv)

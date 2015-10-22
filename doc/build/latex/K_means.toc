@@ -1,0 +1,23 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Table des mati\IeC {\`e}res}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introduction}{3}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Apprentissage Automatique (\emph {Machine learning})}{3}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Apprentissage supervis\IeC {\'e}}{3}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}Apprentissage non supervis\IeC {\'e}}{4}{subsection.1.1.3}
+\contentsline {section}{\numberline {1.2}Etude th\IeC {\'e}orique de k-means}{4}{section.1.2}
+\contentsline {section}{\numberline {1.3}Impl\IeC {\'e}mentation de k-means}{4}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}La fonction compute\_kmeans}{4}{subsection.1.3.1}
+\contentsline {subsubsection}{Phase 1 - Initialisation}{5}{section*.4}
+\contentsline {subsubsection}{Phase 2 - Affectation}{5}{section*.5}
+\contentsline {subsubsection}{Phase 3 - Calculation}{6}{section*.6}
+\contentsline {subsection}{\numberline {1.3.2}La classe Observation}{6}{subsection.1.3.2}
+\contentsline {section}{\numberline {1.4}Traitement des donn\IeC {\'e}es}{7}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Lire, \IeC {\'e}crire et afficher des donn\IeC {\'e}es}{7}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}Format des donn\IeC {\'e}es}{8}{subsection.1.4.2}
+\contentsline {subsubsection}{Le fichier des donn\IeC {\'e}es d\IeC {\textquoteright }entr\IeC {\'e}e}{8}{section*.20}
+\contentsline {subsubsection}{Le fichier des donn\IeC {\'e}es affect\IeC {\'e}es}{8}{section*.21}
+\contentsline {subsubsection}{Le fichier des centres}{8}{section*.22}
+\contentsline {section}{\numberline {1.5}G\IeC {\'e}n\IeC {\'e}rations al\IeC {\'e}atoires de donn\IeC {\'e}es}{8}{section.1.5}
+\contentsline {section}{\numberline {1.6}Les donn\IeC {\'e}es Iris}{9}{section.1.6}
+\contentsline {section}{\numberline {1.7}La Bretagne vue du ciel !}{9}{section.1.7}
+\contentsline {chapter}{Python Module Index}{13}{section*.26}

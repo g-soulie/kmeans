@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kmeans &mdash; K_means 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="K_means 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> K_means
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de G-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nD.html">Générations aléatoires de données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../iris.html">Les données Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sky.html">La Bretagne vue du ciel !</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">K_means</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>kmeans</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for kmeans</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on october 2015</span>
+<span class="sd">@author: B. Pacreau, G. Soulié</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">Observation</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">es</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+
+<span class="k">def</span> <span class="nf">compute_gmeans</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	compute the g-means algorithm on the input file (*./input/input.csv*).</span>
+
+<span class="sd">	:params k: the g-means algorithm will start with this k.</span>
+<span class="sd">	:type k: int</span>
+<span class="sd">	:arg population: the population of Observations tocompute g-means on.</span>
+<span class="sd">	:type population: Observation[]</span>
+<span class="sd">	:params alpha: significance level of the gaussian test</span>
+<span class="sd">	:type alpha: float</span>
+<span class="sd">	:param display: if True, the first and the second coordinate of the </span>
+<span class="sd">		populations are displayed step by step</span>
+<span class="sd">	:type display: boolean</span>
+<span class="sd">	:rtype: void</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="c">#initialisation of the centroids</span>
+	<span class="n">centroids</span> <span class="o">=</span> <span class="bp">None</span>
+
+	<span class="c">#getting the dimension of the observations</span>
+	<span class="n">dimension</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+	<span class="c">#Stop condition of the while loop which increase k</span>
+	<span class="n">stop</span> <span class="o">=</span> <span class="bp">False</span>
+	
+	<span class="k">while</span> <span class="ow">not</span> <span class="n">stop</span><span class="p">:</span>
+		
+		<span class="c">#re-initialize the stop-condition</span>
+		<span class="n">stop</span> <span class="o">=</span> <span class="bp">True</span>
+
+		<span class="c">#compute the k-means algorithms on the population</span>
+		<span class="n">temp</span> <span class="o">=</span> <span class="n">compute_kmeans</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span> <span class="o">=</span> <span class="n">centroids</span><span class="p">,</span><span class="n">display</span> <span class="o">=</span> \
+			<span class="n">display</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;G-means : k = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; - &quot;</span><span class="p">)</span>
+
+		<span class="c">#getting the results of the computation</span>
+		<span class="n">centroids</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">affectation</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		
+		<span class="c">#Loop on each cluster to check the gaussian-like</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+			
+			<span class="c">#getting the population of the cluster</span>
+			<span class="n">subPopulation</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+				<span class="k">if</span> <span class="n">affectation</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+					<span class="n">subPopulation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+			<span class="c">#getting the size of the cluster</span>
+			<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">subPopulation</span><span class="p">)</span>
+
+			<span class="c">#Getting the direction of the cluster</span>
+			<span class="n">dual_centroids</span> <span class="o">=</span> <span class="n">compute_kmeans</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">subPopulation</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">,</span>\
+				<span class="n">title</span><span class="o">=</span><span class="s">&quot;G-means : k = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; - direction of cluster &quot;</span>\
+				<span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; - &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="n">direction_vector</span> <span class="o">=</span> <span class="n">dual_centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">substract</span><span class="p">(</span><span class="n">dual_centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+			
+			<span class="c">#Porjecting the clusters on its direction : </span>
+			<span class="n">norme</span> <span class="o">=</span> <span class="n">direction_vector</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">Observation</span><span class="p">(</span><span class="n">dimension</span><span class="p">))</span>
+			<span class="n">projections</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">subPopulation</span><span class="p">)):</span>
+				<span class="n">projection</span> <span class="o">=</span> <span class="mi">0</span>
+				<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
+					<span class="n">projection</span><span class="o">+=</span><span class="n">subPopulation</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">*</span>\
+					<span class="n">direction_vector</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">/</span><span class="n">norme</span><span class="o">/</span><span class="n">norme</span>
+				<span class="n">projections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">projection</span><span class="p">)</span>
+
+			<span class="c">#using numpy to help for mathematicall stuff</span>
+			<span class="n">projections</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">projections</span><span class="p">)</span>
+
+			<span class="c">#centering around 0</span>
+			<span class="n">projections</span> <span class="o">=</span> <span class="p">(</span><span class="n">projections</span><span class="o">-</span><span class="n">projections</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+
+			<span class="c">#scaling</span>
+			<span class="n">projections</span> <span class="o">/=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">projections</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+
+			<span class="c">#ordering</span>
+			<span class="n">projections</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+			<span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+				<span class="n">es</span><span class="o">.</span><span class="n">display_histogramme</span><span class="p">(</span><span class="n">projections</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> \
+					<span class="s">&quot;histogramme of the cluster &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+			<span class="c">#considering the N(0, 1) cumulative distribution function</span>
+			<span class="n">Z</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">projections</span><span class="p">)</span>
+
+			<span class="c">#computing A²(Z)</span>
+			<span class="n">A_carre</span> <span class="o">=</span> <span class="mi">0</span>
+			<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+				<span class="n">A_carre</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Z</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>	
+			<span class="n">A_carre</span> <span class="o">/=</span> <span class="o">-</span> <span class="n">n</span>
+			<span class="n">A_carre</span> <span class="o">-=</span> <span class="n">n</span>
+
+			<span class="c">#computing A²*(Z)</span>
+			<span class="n">A_star_carre</span> <span class="o">=</span> <span class="n">A_carre</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">4</span><span class="o">/</span><span class="n">n</span><span class="o">-</span><span class="mi">25</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+			<span class="c">#increasing k condition :</span>
+			<span class="k">if</span> <span class="n">A_star_carre</span> <span class="o">&gt;</span> <span class="n">alpha</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">):</span>
+
+				<span class="c">#Setting the new centroids</span>
+				<span class="n">new_centroids</span> <span class="o">=</span> <span class="n">dual_centroids</span>
+				<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+					<span class="k">if</span> <span class="ow">not</span> <span class="n">i</span><span class="o">==</span><span class="n">j</span><span class="p">:</span>
+						<span class="n">new_centroids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">centroids</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+				<span class="n">centroids</span> <span class="o">=</span> <span class="n">new_centroids</span>
+
+				<span class="c">#increasing k</span>
+				<span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+				<span class="k">print</span><span class="p">(</span><span class="s">&quot;cluster &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; non validé gaussien : &quot;</span> <span class="o">+</span> \
+					<span class="nb">str</span><span class="p">(</span><span class="n">A_star_carre</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span><span class="p">)</span>
+				<span class="k">print</span><span class="p">(</span><span class="s">&quot;-------- increasing k --&gt; &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; -----------&quot;</span><span class="p">)</span>
+
+				<span class="c">#change the while loop stop condition</span>
+				<span class="n">stop</span> <span class="o">=</span> <span class="bp">False</span>
+
+				<span class="k">break</span>
+
+			<span class="k">else</span><span class="p">:</span>
+
+				<span class="c">#The cluster is gaussian like.</span>
+				<span class="k">print</span><span class="p">(</span><span class="s">&quot;cluster &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; validé gaussien : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">A_star_carre</span>	\
+				<span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span><span class="p">)</span>
+
+
+	<span class="n">compute_kmeans</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">population</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">)</span>
+				
+
+
+
+<div class="viewcode-block" id="compute_kmeans"><a class="viewcode-back" href="../impl.html#kmeans.compute_kmeans">[docs]</a><span class="k">def</span> <span class="nf">compute_kmeans</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>\
+	<span class="n">max_iteration</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Compute the k-means algorithm on the input file </span>
+<span class="sd">		(*./input/input.csv*)</span>
+
+<span class="sd">	:arg k: the k of k-means : number of centroids</span>
+<span class="sd">	:type k: int</span>
+<span class="sd">	:arg population: the population of Observations tocompute k-means on.</span>
+<span class="sd">	:type population: Observation[]</span>
+<span class="sd">	:param max_iteration: the number maximum of iteration we allow</span>
+<span class="sd">	:type max_iteration: int</span>
+<span class="sd">	:param centroids: the initial positions of centroids</span>
+<span class="sd">	:type controids: Observation[]</span>
+<span class="sd">	:param display: if True, the first and the second coordinate of the </span>
+<span class="sd">		populations are displayed setep by step</span>
+<span class="sd">	:type display: boolean</span>
+<span class="sd">	:return: a table of centroids and a table of affectations</span>
+<span class="sd">	:rtype: Observation[][]</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	
+	<span class="n">dimension</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+	
+
+
+<span class="c">#=============================================================================#</span>
+<span class="c">#						Phase 1 : Initialisation 							  #</span>
+<span class="c">#=============================================================================#</span>
+
+	<span class="k">if</span> <span class="n">centroids</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+		
+		<span class="c">#centroids initialisation:</span>
+		<span class="n">centroids</span><span class="o">=</span><span class="p">[]</span>
+		<span class="n">isSelected</span><span class="o">=</span><span class="p">[]</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+			<span class="n">isSelected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+			<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+
+				<span class="c">#centroids are ranomly choose in the population</span>
+				<span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)))</span>
+
+				<span class="c">#We checked that we don&#39;t take the same centroid twice</span>
+				<span class="k">if</span> <span class="n">isSelected</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+					<span class="n">centroids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+					<span class="n">isSelected</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+					<span class="k">break</span>
+
+	<span class="c">#affectation initialisation:</span>
+	<span class="n">affectation</span><span class="o">=</span><span class="p">[]</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+		<span class="n">affectation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+	
+	<span class="c">#if display, display the population</span>
+	<span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+		<span class="n">es</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="n">title</span> <span class="o">+</span> <span class="s">&quot;Population : &quot;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
+	
+	<span class="c">#Loop stop condition initialisation:</span>
+	<span class="n">stop</span><span class="o">=</span><span class="bp">False</span>
+	
+
+	<span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">while</span> <span class="ow">not</span> <span class="n">stop</span> <span class="ow">and</span> <span class="n">iteration</span> <span class="o">&lt;</span> <span class="n">max_iteration</span><span class="p">:</span>
+		<span class="n">iteration</span><span class="o">+=</span><span class="mi">1</span>
+<span class="c">#=============================================================================#</span>
+<span class="c">#							Phase 2: Affectation 						      #</span>
+<span class="c">#=============================================================================#</span>
+
+		<span class="c">#if display, we print the population and the centroids</span>
+		<span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+			<span class="n">es</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span><span class="p">,</span><span class="n">title</span> <span class="o">+</span>\
+				<span class="s">&quot;computing k-means : iteration &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">iteration</span><span class="p">),</span><span class="bp">False</span><span class="p">)</span>
+
+		<span class="c">#Compute the distance between each observation and each centroid</span>
+		<span class="n">distance</span><span class="o">=</span><span class="p">[[]]</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+			<span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+			<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+				<span class="n">distance</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">centroids</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+
+		<span class="c">#The loop stop condition is fixed to True</span>
+		<span class="n">stop</span> <span class="o">=</span> <span class="bp">True</span>
+
+		<span class="c">#Affect the nearest centroid to each observation.</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+			<span class="n">index_du_minimum</span> <span class="o">=</span> <span class="n">distance</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">distance</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+			<span class="k">if</span> <span class="ow">not</span> <span class="n">affectation</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">index_du_minimum</span><span class="p">:</span>
+				<span class="n">affectation</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">index_du_minimum</span>
+
+		<span class="c">#If there is any changement, the loop stop condition became false</span>
+				<span class="n">stop</span> <span class="o">=</span> <span class="bp">False</span>
+
+
+<span class="c">#=============================================================================#</span>
+<span class="c">#							Phase 3: Calculation 							  #</span>
+<span class="c">#=============================================================================#</span>
+		
+		<span class="c">#Compute the new centroids</span>
+		<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+			<span class="n">centroid</span> <span class="o">=</span> <span class="n">Observation</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)):</span>
+				<span class="k">if</span> <span class="n">affectation</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">j</span><span class="p">:</span>
+					<span class="n">centroid</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+			<span class="n">centroids</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">centroid</span>
+	
+	<span class="c">#write the output files</span>
+	<span class="n">es</span><span class="o">.</span><span class="n">write_kmeans_output</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span><span class="p">,</span><span class="n">affectation</span><span class="p">)</span>
+
+	<span class="c">#if display, we print the population and the centroids</span>
+	<span class="k">if</span> <span class="n">display</span><span class="p">:</span>
+		<span class="n">es</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span><span class="p">,</span><span class="n">title</span> <span class="o">+</span> <span class="s">&quot;K-means computed&quot;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="p">[</span><span class="n">centroids</span><span class="p">,</span><span class="n">affectation</span><span class="p">]</span>
+
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	:option -d: True if you want to display the algorithm steps</span>
+<span class="sd">	:option -a: Set the value og g-means alpĥa (significance level)</span>
+<span class="sd">	:option -k: initialisation of the k in k-means or g-means algorithm.</span>
+<span class="sd">	:option -g: if False, single k-mean is launch</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	
+	<span class="c">#Set the default options:</span>
+	<span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;-k&quot;</span><span class="p">:</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="s">&quot;-d&quot;</span><span class="p">:</span><span class="bp">False</span><span class="p">,</span><span class="s">&quot;-g&quot;</span><span class="p">:</span><span class="s">&quot;True&quot;</span><span class="p">,</span><span class="s">&quot;-a&quot;</span><span class="p">:</span><span class="s">&quot;1&quot;</span><span class="p">}</span>
+
+	<span class="c">#Read the options: </span>
+	<span class="n">i</span><span class="o">=</span><span class="mi">1</span>
+	<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">):</span>
+	    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+	        <span class="n">options</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+	        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+	    <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+
+	<span class="c">#Process the options</span>
+	<span class="n">display</span> <span class="o">=</span> <span class="bp">False</span>
+	<span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&quot;-k&quot;</span><span class="p">])</span>
+	<span class="n">alpha</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&quot;-a&quot;</span><span class="p">])</span>
+
+	<span class="c">#Setting the display option</span>
+	<span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-d&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;True&quot;</span><span class="p">:</span>
+		<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+		<span class="n">display</span> <span class="o">=</span> <span class="bp">True</span>
+
+	<span class="c">#Getting the population</span>
+	<span class="n">population</span> <span class="o">=</span> <span class="n">es</span><span class="o">.</span><span class="n">read_kmeans_input</span><span class="p">()</span>
+
+	<span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-g&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;True&quot;</span><span class="p">:</span>
+
+		<span class="c">#Computing g-means</span>
+		<span class="n">compute_gmeans</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">)</span>
+
+	<span class="k">else</span><span class="p">:</span>
+
+		<span class="c">#computing k-means</span>
+		<span class="n">compute_kmeans</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">population</span><span class="p">,</span> <span class="n">display</span> <span class="o">=</span> <span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&#39;-d&#39;</span><span class="p">]))</span>
+	
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, B. Pacreau, G. Soulié.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

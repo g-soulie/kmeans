@@ -1,0 +1,1 @@
+Dossier où doit être placé le fichier d'entrée (input.csv)
