@@ -6,6 +6,11 @@ from Observation import *
 import matplotlib.pyplot as plt
 import commands
 import math
+import warnings
+
+
+#warnings are not displayed
+warnings.filterwarnings("ignore")
 
 def read_data(filename, skip_first_line = False, ignore_first_column = False):
     '''
@@ -160,6 +165,8 @@ def display(population,centroids,title,keep):
     :rtype: void
     """
 
+    
+
     plt.clf()
     plt.hold(True)
     x=[]
@@ -186,13 +193,15 @@ def display(population,centroids,title,keep):
     plt.title(title)
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.savefig('output/Plot.png')
+    
 
     if keep:
         plt.ioff()
         plt.waitforbuttonpress(timeout=5)
+        plt.savefig("output/'"+str(title)+"'.png")
     else:
         plt.waitforbuttonpress(timeout=0.005)
+        
 
 def display_histogramme(x,title=""):
     """
@@ -215,7 +224,41 @@ def display_histogramme(x,title=""):
     plt.hold(True)
     plt.title(title)
     plt.hist(x,nb_bins)
+    plt.savefig("output/"+str(title)+".png")
     plt.waitforbuttonpress(timeout=time)
 
+def display_Direction(centroid0,centroid1,k=None,cluster=None):
+    """
+    display the histogramm of a vector
 
+    :arg centroid0: first centroid
+    :type centroid0: Observation
+    :arg centroid1: second centroid
+    :type centroid1: Observation
+    :param k: k of kmeans, for title
+    :type k: int
+    :param cluster: cluster whose direction is computed, for title
+    :type cluster: int
+    :rtype: void
+    """
+
+
+    dx = float(abs(centroid0.values[0]-centroid1.values[0]))
+    dy = float(abs(centroid0.values[1]-centroid1.values[1]))
+
+    if (centroid0.values[0]-centroid1.values[0])*(centroid0.values[1]-centroid1.values[1]) < 0:
+        dy = -dy
+
+    x = [(float(centroid0.values[0]+centroid1.values[0]))/2-1.5*dx,(float(centroid0.values[0]+centroid1.values[0]))/2+1.5*dx]
+    y = [(float(centroid0.values[1]+centroid1.values[1]))/2-1.5*dy,(float(centroid0.values[1]+centroid1.values[1]))/2+1.5*dy]
+
+    #time to keep displayed 
+    time = 4
+
+    plt.hold(True)
+    plt.plot(x,y,c='red',linewidth=3)
+    plt.waitforbuttonpress(timeout=time)
+    plt.savefig("output/"+str(k)+str(cluster)+".png")
+
+    
 

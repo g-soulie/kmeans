@@ -84,8 +84,8 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de g-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Implémentation des observations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Traitement des données</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#lire-ecrire-et-afficher-des-donnees">Lire, écrire et afficher des données</a></li>
@@ -163,6 +163,29 @@ des données.</p>
 <li><strong>centroids</strong> (<em>Observation[]</em>) &#8211; set of centroids</li>
 <li><strong>title</strong> (<em>String</em>) &#8211; name of the graphic</li>
 <li><strong>keep</strong> (<em>boolean</em>) &#8211; if true, the figure stay open until the user close it</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="es.display_Direction">
+<code class="descclassname">es.</code><code class="descname">display_Direction</code><span class="sig-paren">(</span><em>centroid0</em>, <em>centroid1</em>, <em>k=None</em>, <em>cluster=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/es.html#display_Direction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#es.display_Direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>display the histogramm of a vector</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>centroid0</strong> (<a class="reference internal" href="Observation.html#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; first centroid</li>
+<li><strong>centroid1</strong> (<a class="reference internal" href="Observation.html#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; second centroid</li>
+<li><strong>k</strong> (<em>int</em>) &#8211; k of kmeans, for title</li>
+<li><strong>cluster</strong> (<em>int</em>) &#8211; cluster whose direction is computed, for title</li>
 </ul>
 </td>
 </tr>

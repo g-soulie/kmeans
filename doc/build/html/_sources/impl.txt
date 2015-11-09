@@ -3,10 +3,7 @@ Implémentation de k-means
 
 .. module:: kmeans
 
-Pour implémenter l'algorithme kmeans, nous avons utilisé deux fichiers : 
-kmeans.py et Observation.py
-
-Le fichier kmeans contient la focntion compute_kmeans
+L'algorithme kmeans est implémenté dans la fonction *compute_kmeans* du fichier *kmeans.py*.
 	
 
 La fonction compute_kmeans
@@ -92,7 +89,7 @@ Phase 2 - Affectation
 
 
 
-Phase 3 - Calculation
+Phase 3 - Calcul
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 		.. code-block:: python

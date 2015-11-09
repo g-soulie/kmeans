@@ -10,7 +10,6 @@ import es
 import sys
 import numpy as np
 from scipy.stats import norm
-import matplotlib.pyplot as plt
 
 
 def compute_gmeans(population,k = 1, alpha = 1,display=False):
@@ -66,7 +65,11 @@ def compute_gmeans(population,k = 1, alpha = 1,display=False):
 			#Getting the direction of the cluster
 			dual_centroids = compute_kmeans(2,subPopulation,display=display,\
 				title="G-means : k = "+str(k)+" - direction of cluster "\
-				+ str(i+1) + "/" + str(k) + " - ")[0]
+				+ str(i+1) + "out of" + str(k) + " - ")[0]
+
+
+			es.display_Direction(dual_centroids[0],dual_centroids[1],k=k,cluster=i)
+
 			direction_vector = dual_centroids[0].substract(dual_centroids[1])
 			
 			#Porjecting the clusters on its direction : 
@@ -120,7 +123,7 @@ def compute_gmeans(population,k = 1, alpha = 1,display=False):
 
 				#increasing k
 				k += 1
-				print("cluster "+str(i)+" non validé gaussien : " + \
+				print("cluster "+str(i+1)+" non validé gaussien : " + \
 					str(A_star_carre/len(population)/alpha) + "!")
 				print("-------- increasing k --> "+str(k)+" -----------")
 
@@ -132,7 +135,7 @@ def compute_gmeans(population,k = 1, alpha = 1,display=False):
 			else:
 
 				#The cluster is gaussian like.
-				print("cluster "+str(i)+" validé gaussien : " + str(A_star_carre	\
+				print("cluster "+str(i+1)+" validé gaussien : " + str(A_star_carre	\
 				/len(population)/alpha) + "!")
 
 
@@ -286,7 +289,6 @@ if __name__ == '__main__':
 
 	#Setting the display option
 	if options["-d"] == "True":
-		plt.ion()
 		display = True
 
 	#Getting the population

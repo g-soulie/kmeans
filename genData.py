@@ -82,6 +82,7 @@ if __name__ == "__main__":
 	:option -t: type of generated data. Can be "random", "iris" or "picture"
 	:option -n: name of the picture to load. require *-t picture*
 	:option -s: number of the gaussian sample to load. require *-t random*
+	:option -d: if True, display the generated datas.
 
 
 	"""

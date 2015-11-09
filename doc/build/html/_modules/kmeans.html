@@ -83,8 +83,8 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de G-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de g-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Implémentation des observations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nD.html">Données aléatoires</a></li>
@@ -147,10 +147,9 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 
-<span class="k">def</span> <span class="nf">compute_gmeans</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_gmeans"><a class="viewcode-back" href="../gmeans.html#kmeans.compute_gmeans">[docs]</a><span class="k">def</span> <span class="nf">compute_gmeans</span><span class="p">(</span><span class="n">population</span><span class="p">,</span><span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	compute the g-means algorithm on the input file (*./input/input.csv*).</span>
 
@@ -203,7 +202,11 @@
 			<span class="c">#Getting the direction of the cluster</span>
 			<span class="n">dual_centroids</span> <span class="o">=</span> <span class="n">compute_kmeans</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">subPopulation</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">,</span>\
 				<span class="n">title</span><span class="o">=</span><span class="s">&quot;G-means : k = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; - direction of cluster &quot;</span>\
-				<span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; - &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+				<span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;out of&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; - &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+			<span class="n">es</span><span class="o">.</span><span class="n">display_Direction</span><span class="p">(</span><span class="n">dual_centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">dual_centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span><span class="n">cluster</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+
 			<span class="n">direction_vector</span> <span class="o">=</span> <span class="n">dual_centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">substract</span><span class="p">(</span><span class="n">dual_centroids</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 			
 			<span class="c">#Porjecting the clusters on its direction : </span>
@@ -257,7 +260,7 @@
 
 				<span class="c">#increasing k</span>
 				<span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
-				<span class="k">print</span><span class="p">(</span><span class="s">&quot;cluster &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; non validé gaussien : &quot;</span> <span class="o">+</span> \
+				<span class="k">print</span><span class="p">(</span><span class="s">&quot;cluster &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; non validé gaussien : &quot;</span> <span class="o">+</span> \
 					<span class="nb">str</span><span class="p">(</span><span class="n">A_star_carre</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span><span class="p">)</span>
 				<span class="k">print</span><span class="p">(</span><span class="s">&quot;-------- increasing k --&gt; &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; -----------&quot;</span><span class="p">)</span>
 
@@ -269,7 +272,7 @@
 			<span class="k">else</span><span class="p">:</span>
 
 				<span class="c">#The cluster is gaussian like.</span>
-				<span class="k">print</span><span class="p">(</span><span class="s">&quot;cluster &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; validé gaussien : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">A_star_carre</span>	\
+				<span class="k">print</span><span class="p">(</span><span class="s">&quot;cluster &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s">&quot; validé gaussien : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">A_star_carre</span>	\
 				<span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span><span class="p">)</span>
 
 
@@ -277,7 +280,7 @@
 				
 
 
-
+</div>
 <div class="viewcode-block" id="compute_kmeans"><a class="viewcode-back" href="../impl.html#kmeans.compute_kmeans">[docs]</a><span class="k">def</span> <span class="nf">compute_kmeans</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">population</span><span class="p">,</span><span class="n">centroids</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span><span class="n">display</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>\
 	<span class="n">max_iteration</span><span class="o">=</span><span class="mi">99999</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -423,7 +426,6 @@
 
 	<span class="c">#Setting the display option</span>
 	<span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s">&quot;-d&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;True&quot;</span><span class="p">:</span>
-		<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
 		<span class="n">display</span> <span class="o">=</span> <span class="bp">True</span>
 
 	<span class="c">#Getting the population</span>

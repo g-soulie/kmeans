@@ -32,7 +32,7 @@
   
     <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
         <link rel="next" title="Traitement des données" href="data.html"/>
-        <link rel="prev" title="Observation" href="Observation.html"/> 
+        <link rel="prev" title="Implémentation des observations" href="Observation.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,13 +84,13 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de g-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Implémentation des observations</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Implémentation de k-means</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#la-fonction-compute-kmeans">La fonction compute_kmeans</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#phase-1-initialisation">Phase 1 - Initialisation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#phase-2-affectation">Phase 2 - Affectation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#phase-3-calculation">Phase 3 - Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-3-calcul">Phase 3 - Calcul</a></li>
 </ul>
 </li>
 </ul>
@@ -145,9 +145,7 @@
             
   <div class="section" id="module-kmeans">
 <span id="implementation-de-k-means"></span><h1>Implémentation de k-means<a class="headerlink" href="#module-kmeans" title="Permalink to this headline">¶</a></h1>
-<p>Pour implémenter l&#8217;algorithme kmeans, nous avons utilisé deux fichiers :
-kmeans.py et Observation.py</p>
-<p>Le fichier kmeans contient la focntion compute_kmeans</p>
+<p>L&#8217;algorithme kmeans est implémenté dans la fonction <em>compute_kmeans</em> du fichier <em>kmeans.py</em>.</p>
 <div class="section" id="la-fonction-compute-kmeans">
 <h2>La fonction compute_kmeans<a class="headerlink" href="#la-fonction-compute-kmeans" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -256,8 +254,8 @@ opérations d&#8217;écriture, de lecture et d&#8217;affichages des <a class="re
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="phase-3-calculation">
-<h3>Phase 3 - Calculation<a class="headerlink" href="#phase-3-calculation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="phase-3-calcul">
+<h3>Phase 3 - Calcul<a class="headerlink" href="#phase-3-calcul" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python"><div class="highlight"><pre><span class="c">#Compute the new centroids</span>
 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
@@ -291,7 +289,7 @@ opérations d&#8217;écriture, de lecture et d&#8217;affichages des <a class="re
         <a href="data.html" class="btn btn-neutral float-right" title="Traitement des données" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Observation.html" class="btn btn-neutral" title="Observation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Observation.html" class="btn btn-neutral" title="Implémentation des observations" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

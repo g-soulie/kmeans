@@ -83,8 +83,8 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de G-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de g-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Implémentation des observations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nD.html">Données aléatoires</a></li>
@@ -143,6 +143,11 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">commands</span>
 <span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<span class="c">#warnings are not displayed</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">&quot;ignore&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="read_data"><a class="viewcode-back" href="../data.html#es.read_data">[docs]</a><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">skip_first_line</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ignore_first_column</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
@@ -297,6 +302,8 @@
 <span class="sd">    :rtype: void</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    
+
     <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">x</span><span class="o">=</span><span class="p">[]</span>
@@ -323,13 +330,15 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&#39;output/Plot.png&#39;</span><span class="p">)</span>
+    
 
     <span class="k">if</span> <span class="n">keep</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">waitforbuttonpress</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;output/&#39;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;&#39;.png&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">waitforbuttonpress</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">0.005</span><span class="p">)</span>
+        
 </div>
 <div class="viewcode-block" id="display_histogramme"><a class="viewcode-back" href="../data.html#es.display_histogramme">[docs]</a><span class="k">def</span> <span class="nf">display_histogramme</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -352,7 +361,43 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">nb_bins</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;output/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">title</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;.png&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">waitforbuttonpress</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="display_Direction"><a class="viewcode-back" href="../data.html#es.display_Direction">[docs]</a><span class="k">def</span> <span class="nf">display_Direction</span><span class="p">(</span><span class="n">centroid0</span><span class="p">,</span><span class="n">centroid1</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">cluster</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    display the histogramm of a vector</span>
+
+<span class="sd">    :arg centroid0: first centroid</span>
+<span class="sd">    :type centroid0: Observation</span>
+<span class="sd">    :arg centroid1: second centroid</span>
+<span class="sd">    :type centroid1: Observation</span>
+<span class="sd">    :param k: k of kmeans, for title</span>
+<span class="sd">    :type k: int</span>
+<span class="sd">    :param cluster: cluster whose direction is computed, for title</span>
+<span class="sd">    :type cluster: int</span>
+<span class="sd">    :rtype: void</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="n">dx</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="o">-</span><span class="n">dy</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">dx</span><span class="p">,(</span><span class="nb">float</span><span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mf">1.5</span><span class="o">*</span><span class="n">dx</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">dy</span><span class="p">,(</span><span class="nb">float</span><span class="p">(</span><span class="n">centroid0</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">centroid1</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mf">1.5</span><span class="o">*</span><span class="n">dy</span><span class="p">]</span>
+
+    <span class="c">#time to keep displayed </span>
+    <span class="n">time</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">&#39;red&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">waitforbuttonpress</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;output/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;.png&quot;</span><span class="p">)</span>
+
+    
 </pre></div></div>
 
            </div>

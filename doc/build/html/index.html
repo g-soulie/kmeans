@@ -83,8 +83,8 @@
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de g-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Implémentation des observations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nD.html">Données aléatoires</a></li>
@@ -161,8 +161,62 @@
 </pre></div>
 </div>
 </div></blockquote>
+<p>Le fichier <em>kmeans.py</em> vous permet de lancer les algorithmes kmeans et gmeans. Les algorithmes se lancent avec la commande suivante :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python kmeans.py [-options] options
+</pre></div>
+</div>
+</div></blockquote>
+<p>Les options disponibles sont les suivantes :</p>
+<blockquote>
+<div><table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-d</span></kbd></td>
+<td>Si True, illustre l&#8217;algorithme à l&#8217;écran. Défaut : False.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-g</span></kbd></td>
+<td>Si False, un simple kmeans est lancé. Défaut True : gmeans est lancé.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-k</span></kbd></td>
+<td>k de kmeans. Si g-means est lancé, k d&#8217;initialisation de gmeans.  Défaut : 1.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-a</span></kbd></td>
+<td>Significance level of the gaussian test (pour gmeans).</td></tr>
+</tbody>
+</table>
+</div></blockquote>
 <p>Lorsqu&#8217;on lance kmeans, les données présentes dans le fichier <em>./input/input.csv</em> sont étudiées, et le résultat est écrit dans deux fichiers, <em>./output/affectation.csv</em> et <em>./output/centroids.csv</em></p>
-<p>Le fichier <em>genData.py</em> vous permet de générer un fichier input.csv. Vous pouvez générer différents type de données, à savoir : des <a class="reference internal" href="nD.html#random"><span>données aléatoires</span></a>, des <a class="reference internal" href="iris.html#iris"><span>données Iris</span></a> ou encore <a class="reference internal" href="sky.html#sky"><span>La Bretagne vue du ciel</span></a>. Bien évidemment, vous pouvez utiliser l&#8217;algorithme avec un autre jeu de données de votre choix, pourvu que le fichier <em>input.csv</em> respecte le bon format (cf <a class="reference internal" href="data.html#format"><span>Format des données</span></a>).</p>
+<p>Le fichier <em>genData.py</em> vous permet de générer un fichier <em>input.csvù</em>. Vous pouvez générer différents type de données, à savoir : des <a class="reference internal" href="nD.html#random"><span>données aléatoires</span></a>, des <a class="reference internal" href="iris.html#iris"><span>données Iris</span></a> ou encore <a class="reference internal" href="sky.html#sky"><span>La Bretagne vue du ciel</span></a>. Bien évidemment, vous pouvez utiliser l&#8217;algorithme avec un autre jeu de données de votre choix, pourvu que le fichier <em>input.csv</em> respecte le bon format (cf <a class="reference internal" href="data.html#format"><span>Format des données</span></a>). La génération se fait grâce à la commande suivante :</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre>python genData.py [-options] options
+</pre></div>
+</div>
+</div></blockquote>
+<p>Les options disponibles sont les suivantes :</p>
+<blockquote>
+<div><table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-d</span></kbd></td>
+<td>Si True, illustre les données générées à l&#8217;écran. Défaut : False.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-t</span></kbd></td>
+<td>Type. &#8220;random&#8221;, &#8220;iris&#8221; ou &#8220;picture&#8221;</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-n</span></kbd></td>
+<td>Name. Si le type est &#8220;picture&#8221;, va chercher l&#8217;image ainsi nommé dans le dossier input.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-s</span></kbd></td>
+<td>Sample. Si le type est random, permet de générer plusieurs exemples de gaussiennes.</td></tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Le fichier <em>es</em>.py rassemble l&#8217;ensemble des fontions nécessaires au traitement des données, tandis que la classe Observation (<em>Observation.py</em>) implémente les observation.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
@@ -171,14 +225,34 @@
 <li class="toctree-l2"><a class="reference internal" href="introduction.html#apprentissage-non-supervise">Apprentissage non supervisé</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de G-means</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Observation.html">Observation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kmeans.html#principales-etapes-de-lalgorithme">Principales étapes de l’algorithme :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kmeans.html#exemple-de-deroulement-de-kmeans-en-deux-dimensions">Exemple de déroulement de kmeans (en deux dimensions) :</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kmeans.html#initialisation">Initialisation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kmeans.html#iteration-1">Itération 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kmeans.html#iteration-2">Itération 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kmeans.html#iteration-3">Itération 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de g-means</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gmeans.html#principales-etapes-de-lalgorithme">Principales étapes de l’algorithme :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gmeans.html#la-fonction-compute-gmeans">La fonction compute_gmeans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gmeans.html#exemple-de-deroulement-de-gmeans-en-deux-dimensions">Exemple de déroulement de gmeans (en deux dimensions) :</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gmeans.html#iteration-1-k-1">Itération 1 - k = 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gmeans.html#iteration-2-k-2">Itération 2 - k = 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gmeans.html#iteration-3-k-3">Itération 3 - k = 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Implémentation des observations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="impl.html#la-fonction-compute-kmeans">La fonction compute_kmeans</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="impl.html#phase-1-initialisation">Phase 1 - Initialisation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="impl.html#phase-2-affectation">Phase 2 - Affectation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="impl.html#phase-3-calculation">Phase 3 - Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="impl.html#phase-3-calcul">Phase 3 - Calcul</a></li>
 </ul>
 </li>
 </ul>
