@@ -67,8 +67,8 @@ def compute_gmeans(population,k = 1, alpha = 1,display=False):
 				title="G-means : k = "+str(k)+" - direction of cluster "\
 				+ str(i+1) + "out of" + str(k) + " - ")[0]
 
-
-			es.display_Direction(dual_centroids[0],dual_centroids[1],k=k,cluster=i)
+			if display:
+				es.display_Direction(dual_centroids[0],dual_centroids[1],k=k,cluster=i)
 
 			direction_vector = dual_centroids[0].substract(dual_centroids[1])
 			

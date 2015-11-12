@@ -198,7 +198,7 @@ def display(population,centroids,title,keep):
     if keep:
         plt.ioff()
         plt.waitforbuttonpress(timeout=5)
-        plt.savefig("output/'"+str(title)+"'.png")
+        plt.savefig("output/fig.png")
     else:
         plt.waitforbuttonpress(timeout=0.005)
         
@@ -224,7 +224,7 @@ def display_histogramme(x,title=""):
     plt.hold(True)
     plt.title(title)
     plt.hist(x,nb_bins)
-    plt.savefig("output/"+str(title)+".png")
+    plt.savefig("output/fig.png")
     plt.waitforbuttonpress(timeout=time)
 
 def display_Direction(centroid0,centroid1,k=None,cluster=None):
@@ -258,7 +258,7 @@ def display_Direction(centroid0,centroid1,k=None,cluster=None):
     plt.hold(True)
     plt.plot(x,y,c='red',linewidth=3)
     plt.waitforbuttonpress(timeout=time)
-    plt.savefig("output/"+str(k)+str(cluster)+".png")
+    plt.savefig("output/fig.png")
 
     
 
