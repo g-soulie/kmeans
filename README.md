@@ -4,14 +4,14 @@ Welcome in this repository about a k-means implementation.
 
 Please visit the documentation page if you want to have a larger view of this project :
 
-http://pikkendorff.github.io/kmeans/
+http://g-soulie.github.io/kmeans/
 
 Installation
 -----------------
 
 On a linux terminal, you only need to type the following commands to get our code.
 
-    git clone http://github.com/pikkendorff/kmeans
+    git clone http://github.com/g-soulie/kmeans
 
 
 Generating datas
@@ -45,4 +45,4 @@ The two output files are ./output/affectation.csv and ./output/centroids.csv
 You can set the number of centroids (the k) by adding for example -k 10
 Once again, you can display the algorithms with the option -d True
 
-Remeber to visit http://pikkendorff.github.io/kmeans/ if you have any question.
+Remeber to visit http://g-soulie.github.io/kmeans/ if you have any question.
