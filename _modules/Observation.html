@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Observation &mdash; K_means 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="K_means 1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> K_means
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kmeans.html">Etude théorique de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gmeans.html">Etude théorique de g-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Observation.html">Implémentation des observations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl.html">Implémentation de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data.html">Traitement des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nD.html">Données aléatoires</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../iris.html">Les données Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sky.html">La Bretagne vue du ciel !</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">K_means</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>Observation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for Observation</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on October 2015</span>
+<span class="sd">@author: B.pacreau, G. Soulié</span>
+
+<span class="sd">Class that represents an element of a population to </span>
+<span class="sd">analyze.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<div class="viewcode-block" id="Observation"><a class="viewcode-back" href="../Observation.html#kmeans.Observation">[docs]</a><span class="k">class</span> <span class="nc">Observation</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Observation.__init__"><a class="viewcode-back" href="../Observation.html#kmeans.Observation.__init__">[docs]</a>	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dimension</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Create a new observation.</span>
+
+<span class="sd">		:arg dimension: dimension of the observation</span>
+<span class="sd">		:type dimension: int</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">dimension</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="mf">0.</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Observation.add"><a class="viewcode-back" href="../Observation.html#kmeans.Observation.add">[docs]</a>	<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">observation</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Add another observation values to self.values, with ponderation by self.weight.</span>
+<span class="sd">		Typically use wen this instanciation of Observation is a centroid.</span>
+<span class="sd">		This function permits to compute easily a barycentre of several observations</span>
+
+<span class="sd">		:arg observation: the observation to add to the barycentre</span>
+<span class="sd">		:type observation: Observation</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">observation</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">+=</span><span class="mf">1.</span>
+</div>
+<div class="viewcode-block" id="Observation.set_values"><a class="viewcode-back" href="../Observation.html#kmeans.Observation.set_values">[docs]</a>	<span class="k">def</span> <span class="nf">set_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		set the values of the observation</span>
+
+<span class="sd">		:arg values: valeurs de l&#39;observation</span>
+<span class="sd">		:type values: float[]</span>
+<span class="sd">		:rtype: void</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="Observation.dist"><a class="viewcode-back" href="../Observation.html#kmeans.Observation.dist">[docs]</a>	<span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">observation</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		compute and return the euclidian distance between self \</span>
+<span class="sd">			and another observation</span>
+
+<span class="sd">		:arg observation: the observation to compute the distance with</span>
+<span class="sd">		:type observation: Observation</span>
+<span class="sd">		:rtype: float</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">somme</span><span class="o">=</span><span class="mf">0.</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">):</span>
+			<span class="n">somme</span><span class="o">+=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">observation</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+		<span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">somme</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="Observation.copy"><a class="viewcode-back" href="../Observation.html#kmeans.Observation.copy">[docs]</a>	<span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Return another obseration with the same values</span>
+
+<span class="sd">		:rtype: Observation</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">copy</span><span class="o">=</span><span class="n">Observation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
+		<span class="n">copy</span><span class="o">.</span><span class="n">set_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">copy</span>
+</div>
+<div class="viewcode-block" id="Observation.substract"><a class="viewcode-back" href="../Observation.html#kmeans.Observation.substract">[docs]</a>	<span class="k">def</span> <span class="nf">substract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">observation</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Return an obseration which is the substraction of self - observation</span>
+
+<span class="sd">		:arg observation: the observation to compute substraction with</span>
+<span class="sd">		:type observation: Observation</span>
+<span class="sd">		:rtype: Observation</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">sub</span><span class="o">=</span><span class="n">Observation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">):</span>
+			<span class="n">sub</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">observation</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+		<span class="k">return</span> <span class="n">sub</span>
+</pre></div></div></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, B. Pacreau, G. Soulié.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

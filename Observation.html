@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Implémentation des observations &mdash; K_means 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Implémentation de k-means" href="impl.html"/>
+        <link rel="prev" title="Etude théorique de g-means" href="gmeans.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> K_means
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gmeans.html">Etude théorique de g-means</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Implémentation des observations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nD.html">Données aléatoires</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">K_means</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Implémentation des observations</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/Observation.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="implementation-des-observations">
+<h1>Implémentation des observations<a class="headerlink" href="#implementation-des-observations" title="Permalink to this headline">¶</a></h1>
+<p>Observation est une classe permettant de représenter un individu d&#8217;une population à étudier. Ses méthodes sont décrites ci-dessous :</p>
+<span class="target" id="module-kmeans"></span><dl class="class">
+<dt id="kmeans.Observation">
+<em class="property">class </em><code class="descclassname">kmeans.</code><code class="descname">Observation</code><span class="sig-paren">(</span><em>dimension</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="kmeans.Observation.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dimension</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new observation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dimension</strong> (<em>int</em>) &#8211; dimension of the observation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="kmeans.Observation.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add another observation values to self.values, with ponderation by self.weight.
+Typically use wen this instanciation of Observation is a centroid.
+This function permits to compute easily a barycentre of several observations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation</strong> (<a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; the observation to add to the barycentre</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="kmeans.Observation.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return another obseration with the same values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation">Observation</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="kmeans.Observation.dist">
+<code class="descname">dist</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.dist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.dist" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute and return the euclidian distance between self                  and another observation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation</strong> (<a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; the observation to compute the distance with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="kmeans.Observation.set_values">
+<code class="descname">set_values</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.set_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.set_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the values of the observation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>values</strong> (<em>float[]</em>) &#8211; valeurs de l&#8217;observation</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="kmeans.Observation.substract">
+<code class="descname">substract</code><span class="sig-paren">(</span><em>observation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Observation.html#Observation.substract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.Observation.substract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an obseration which is the substraction of self - observation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation</strong> (<a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation"><em>Observation</em></a>) &#8211; the observation to compute substraction with</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#kmeans.Observation" title="kmeans.Observation">Observation</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="impl.html" class="btn btn-neutral float-right" title="Implémentation de k-means" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gmeans.html" class="btn btn-neutral" title="Etude théorique de g-means" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, B. Pacreau, G. Soulié.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+<div class='rst-versions' role='note' style='cursor: pointer'>
+ <span class='rst-current-version' data-toggle='rst-current-version'>
+<a href = 'http://github.com/g-soulie/kmeans' class='icon icon-github' style='float: left; color: #fcfcfc'> view on GitHub</a>
+<span style='margin-left: 15px'></span></span></div>
+</body>
+</html>

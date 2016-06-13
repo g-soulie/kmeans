@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Etude théorique de g-means &mdash; K_means 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="K_means 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Implémentation des observations" href="Observation.html"/>
+        <link rel="prev" title="Etude théorique de k-means" href="kmeans.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> K_means
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kmeans.html">Etude théorique de k-means</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Etude théorique de g-means</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#principales-etapes-de-lalgorithme">Principales étapes de l’algorithme :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#la-fonction-compute-gmeans">La fonction compute_gmeans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exemple-de-deroulement-de-gmeans-en-deux-dimensions">Exemple de déroulement de gmeans (en deux dimensions) :</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#iteration-1-k-1">Itération 1 - k = 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteration-2-k-2">Itération 2 - k = 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteration-3-k-3">Itération 3 - k = 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Observation.html">Implémentation des observations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl.html">Implémentation de k-means</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Traitement des données</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nD.html">Données aléatoires</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iris.html">Les données Iris</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sky.html">La Bretagne vue du ciel !</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">K_means</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Etude théorique de g-means</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/gmeans.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="etude-theorique-de-g-means">
+<h1>Etude théorique de g-means<a class="headerlink" href="#etude-theorique-de-g-means" title="Permalink to this headline">¶</a></h1>
+<p>Le principe de l&#8217;algorithme est le suivant : étant donnée une population d&#8217;individus, toujours appelés <em>observations</em>, on souhaite déterminer un cetain nombre d&#8217;observations moyennes qui reflètent bien l&#8217;ensemble des observations.
+Simplement, à la différence de kmeans, on ne connaît pas à l&#8217;avance le nombre d&#8217;observations moyennes optimal pour représenter la population : l&#8217;algorithme gmeans va le determiner automatiquement pour l&#8217;utilisateur.
+Concrétement, gmeans correspond à un kmeans où le <em>k</em> est appris lors de l&#8217;algorithme.</p>
+<p>Le critère qui va nous permettre de determiner le <em>k</em> optimal est le caractère gaussien des observations. En effet, on va vouloir que tous clusters correspondent, à une certaine marge d&#8217;erreur près, à une gaussienne. Cette exigence est assez naturelle dans le cadre d&#8217;observations scientifiques : en effet, la nature suit très souvent des lois de distribution gaussienne. En revanche, ce n&#8217;est pas forcément adapté à tous les cas d&#8217;utilisation possible, et on pourrait très bien imaginer, bien que ce ne soit pas implémenté ici, un critère qui ne soit pas gaussien mais qui corresponde à une autre loi de distribution.</p>
+<div class="section" id="principales-etapes-de-lalgorithme">
+<h2>Principales étapes de l’algorithme :<a class="headerlink" href="#principales-etapes-de-lalgorithme" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Initialisation de l&#8217;algorithme : k =1 par défaut</p>
+</li>
+<li><p class="first">Lancement de kmeans</p>
+</li>
+<li><dl class="first docutils">
+<dt>Pour chaque cluster, on cherche à savoir si le cluster ressemble à une distribution gaussienne. Pour cela :</dt>
+<dd><ul class="first last simple">
+<li>On cherche à déterminer la direction principale du cluster. On lance donc k-means avec k=2.</li>
+<li>On projette le cluster sur la droite reliant les deux centroids. On normalise la projection (centrage autours de 0 et mise à l&#8217;échelle pour une variance de 1).</li>
+<li>On applique la fonction A* à la projection. Si on se trouve en dessous de alpha*n, le cluster est validé gaussien. On peut donc étudier le prochain cluster. Si en revanche on se trouve au dessus de alpha*n, le cluster n&#8217;est pas validé gaussien. On incrémente donc k et on reprend à la phase 2 de l&#8217;algorithme avec k = k+1.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Lorsque tous les clusters sont validés gaussiens sur une itération, gmeans est terminé.</p>
+</li>
+</ul>
+<span class="target" id="module-kmeans"></span><p>L&#8217;algorithme gmeans est implémenté dans la fonction <em>compute_gmeans</em> du fichier <em>kmeans.py</em>.</p>
+</div>
+<div class="section" id="la-fonction-compute-gmeans">
+<h2>La fonction compute_gmeans<a class="headerlink" href="#la-fonction-compute-gmeans" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="kmeans.compute_gmeans">
+<code class="descclassname">kmeans.</code><code class="descname">compute_gmeans</code><span class="sig-paren">(</span><em>population</em>, <em>k=1</em>, <em>alpha=1</em>, <em>display=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kmeans.html#compute_gmeans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kmeans.compute_gmeans" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute the g-means algorithm on the input file (<em>./input/input.csv</em>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Params k:</th><td class="field-body"><p class="first">the g-means algorithm will start with this k.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>population</strong> (<em>Observation[]</em>) &#8211; the population of Observations tocompute g-means on.</li>
+<li><strong>display</strong> (<em>boolean</em>) &#8211; if True, the first and the second coordinate of the 
+populations are displayed step by step</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Params alpha:</th><td class="field-body"><p class="first">significance level of the gaussian test</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>compute_kmeans fait appel au fichier es.py qui regroupe l&#8217;ensemble des
+opérations d&#8217;écriture, de lecture et d&#8217;affichages des <a class="reference internal" href="data.html#data"><span>données</span></a></p>
+</div>
+<div class="section" id="exemple-de-deroulement-de-gmeans-en-deux-dimensions">
+<h2>Exemple de déroulement de gmeans (en deux dimensions) :<a class="headerlink" href="#exemple-de-deroulement-de-gmeans-en-deux-dimensions" title="Permalink to this headline">¶</a></h2>
+<p>Considérons la population suivante :</p>
+<img alt="_images/k0.png" class="align-center" src="_images/k0.png" />
+<p>Nous voulons séparer ces observations en trois groupe, nous choisissons donc de lancer l&#8217;algorithme gmeans.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">python</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">d</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<div class="section" id="iteration-1-k-1">
+<h3>Itération 1 - k = 1<a class="headerlink" href="#iteration-1-k-1" title="Permalink to this headline">¶</a></h3>
+<p>g-means commence avec kmeans pour k=1 :</p>
+<img alt="_images/k1.png" class="align-center" src="_images/k1.png" />
+<p>Pour vérifier si le premier cluster est gaussien, nous lancons k-means dessus avec k=2, nous récupérons la direction du cluster et nous projettons le cluster dessus.</p>
+<img alt="_images/k1d1.png" class="align-center" src="_images/k1d1.png" />
+<img alt="_images/k1d1_.png" class="align-center" src="_images/k1d1_.png" />
+<img alt="_images/k1hc1.png" class="align-center" src="_images/k1hc1.png" />
+<p>La projection du cluster sur sa direction n&#8217;est pas validée gaussienne, on incrémente donc k (k = 1 + 1).</p>
+<div class="highlight-html"><div class="highlight"><pre>cluster 0 non validé gaussien : 14.2975999403!
+-------- increasing k --&gt; 2 -----------
+</pre></div>
+</div>
+</div>
+<div class="section" id="iteration-2-k-2">
+<h3>Itération 2 - k = 2<a class="headerlink" href="#iteration-2-k-2" title="Permalink to this headline">¶</a></h3>
+<p>On commence avec k-means avec k = 2.</p>
+<img alt="_images/k2.png" class="align-center" src="_images/k2.png" />
+<p>Pour vérifier si le premier cluster est gaussien, nous lancons k-means dessus avec k=2, nous récupérons la direction du cluster et nous projettons le cluster dessus.</p>
+<img alt="_images/k2d1.png" class="align-center" src="_images/k2d1.png" />
+<img alt="_images/k2d1_.png" class="align-center" src="_images/k2d1_.png" />
+<img alt="_images/k2hc1.png" class="align-center" src="_images/k2hc1.png" />
+<p>La projection du cluster sur sa direction n&#8217;est pas validée gaussienne, on incrémente donc k (k = 2 + 1).</p>
+<div class="highlight-html"><div class="highlight"><pre>cluster 0 non validé gaussien : 10.741695949!
+-------- increasing k --&gt; 3 -----------
+</pre></div>
+</div>
+</div>
+<div class="section" id="iteration-3-k-3">
+<h3>Itération 3 - k = 3<a class="headerlink" href="#iteration-3-k-3" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/k3.png" class="align-center" src="_images/k3.png" />
+<p>Pour vérifier si le premier cluster est gaussien, nous lancons k-means dessus avec k=2, nous récupérons la direction du cluster et nous projettons le cluster dessus.</p>
+<img alt="_images/k3d1.png" class="align-center" src="_images/k3d1.png" />
+<img alt="_images/k3d1_.png" class="align-center" src="_images/k3d1_.png" />
+<img alt="_images/k3hc1.png" class="align-center" src="_images/k3hc1.png" />
+<p>Le cluster 1 est validé gaussien, nous passons donc au cluster suivant.</p>
+<div class="highlight-html"><div class="highlight"><pre>cluster 1 validé gaussien : 0.0797061693984!
+</pre></div>
+</div>
+<img alt="_images/k3d2.png" class="align-center" src="_images/k3d2.png" />
+<img alt="_images/k3d2_.png" class="align-center" src="_images/k3d2_.png" />
+<img alt="_images/k3hc2.png" class="align-center" src="_images/k3hc2.png" />
+<p>Le cluster 2 est validé gaussien, nous passons donc au cluster suivant.</p>
+<div class="highlight-html"><div class="highlight"><pre>cluster 2 validé gaussien : 0.546286569869!
+</pre></div>
+</div>
+<img alt="_images/k3d3.png" class="align-center" src="_images/k3d3.png" />
+<img alt="_images/k3d3_.png" class="align-center" src="_images/k3d3_.png" />
+<img alt="_images/k3hc3.png" class="align-center" src="_images/k3hc3.png" />
+<p>Le cluster 3 est également validé gaussien.</p>
+<div class="highlight-html"><div class="highlight"><pre>cluster 3 validé gaussien : 0.0510247798951!
+</pre></div>
+</div>
+<p>Tous les clusters sont validés gaussien, l&#8217;algorithme g-means est donc terminé pour k = 3.</p>
+<img alt="_images/k3ok.png" class="align-center" src="_images/k3ok.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Observation.html" class="btn btn-neutral float-right" title="Implémentation des observations" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kmeans.html" class="btn btn-neutral" title="Etude théorique de k-means" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, B. Pacreau, G. Soulié.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+<div class='rst-versions' role='note' style='cursor: pointer'>
+ <span class='rst-current-version' data-toggle='rst-current-version'>
+<a href = 'http://github.com/g-soulie/kmeans' class='icon icon-github' style='float: left; color: #fcfcfc'> view on GitHub</a>
+<span style='margin-left: 15px'></span></span></div>
+</body>
+</html>
